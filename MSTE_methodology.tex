@@ -41,6 +41,7 @@
 %\address{SINTEF Materials and Chemistry, 7465 Trondheim, NORWAY}
 %\email{sverre.g.johnsen@sintef.no}
 
+\newcommand{\TODO}[1]{TODO: #1 \\}
 
 
 \begin{document}
@@ -48,6 +49,37 @@
 \headers   %create the page headers and footers
 
 \newpage
+
+\section{Introduction}
+
+\TODO{    * Describe traditional approaches for porous media problems}
+\TODO{     * Introduce the concept of the topology of porous media and define the pore size distribution. (esto es nuevo?) NO, tengo referencias de hace unos anios.}
+\TODO{     * Describe how porous media problems can be affected by the pore scale (capillarity, heterogeneous reactions, permeability and channelling)}
+\TODO{     * Introduce the MSTE}
+\TODO{     * Comment on the challenges for solving the MSTE}
+\TODO{     * Compare the MSTE with other internal variable problems and suggest LSQ as a possibility.}
+\TODO{     * Introduce LSQ}
+
+
+
+\TODO{           o State the scope of the article.}
+
+\TODO{     * State clearly that the paper will not address how to find the MSTE kernels. No comparison with experiments is given.}
+\TODO{     * Suitability of the method will be shown by the manufactured solution method.}
+\TODO{     * Mention the assumptions of steady state, etc, for the present analysis.}
+
+
+\TODO{     * This paper proposes and explains how to solve MSTE with LSQ.}
+
+
+\section{Model}
+
+\section{    * Explain the porosity  distribution concept}
+\section{    * Explain the permeability, advective velocity per pore scale.}
+\section{    * Explain the redistribution}
+\section{    * Explain the meaning of the cumulative distribution functions}
+\section{    * Explain MSTE}
+\section{    * Point out challenges for solving the equation}
 
 \section{The least-squares method}
 Let us write our system of equations as follows:
@@ -250,6 +282,38 @@ $\mathbf{I_h}$ is the integral operator weighted with $h$, and is defined as fol
 
 Here, we define new quadrature points and weights such that $s_k$ exists within the integration boundaries for each row of the integral operator matrix.
 
+\section{Numerical Example}
+
+\TODO{[REESCRIBIR ECUACIONES]}
+
+\TODO{Mention implementation details (polynomials and quadratures used, number of points, solver, etc.).  ouch... }
+
+\TODO{Explain and show q, epsilon and h. and BCs}
+
+\InsFig{profiles}{Left column: porosity distribution (top) and cumulative porosity distribution (bottom). Middle column: discharge distribution (top) and cumulative discharge distribution (bottom). Right column: velocity per channel (top), and 1-metre residence time (bottom)}{profiles}
+
+\TODO{Describe what case could be described with this simplified model.}
+
+\TODO{Show solution (phi) and S.}
+
+\InsFig{solution}{Solution}{solution}
+\InsFig{source}{Source}{source}
+
+\TODO{Explain what is happening with phi and S in each scale, and the mixing by h.}
+
+\TODO{Show and comment on convergence plot}
+
+\InsFig{convergence}{Convergence plot}{convergence}
+
+\section{Conclusion}
+
+\TODO{Contribution of this paper:}
+
+\TODO{    * This paper proposes and explains how to solve MSTE with LSQ.}
+\TODO{    * Shows that LSQ solves the MSTE with exponential convergence.}
+
+
+\TODO{mas despues que tengamos todas las figuras}
 
 %\abstract{
 %  This file is an example \LaTeX file for submission to CFD2011.  A
@@ -298,6 +362,7 @@ Here, we define new quadrature points and weights such that $s_k$ exists within 
 %\end{equation}
 %\newpage
 %
+
 %\InsFig{figure}{Schematic diagram of geometry.}{label1}
 %\InsFigRot{figure}{Rotated schematic diagram of geometry.}{label2}
 %

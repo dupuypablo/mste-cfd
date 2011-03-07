@@ -1,0 +1,341 @@
+\documentclass{CFD2011}
+\usepackage{CFD2011}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%This template is created for complying with the author instructions for the 
+%8th International Conference on CFD in Oil & Gas, Metallurgical and Process Industries
+%hosted by SINTEF/NTNU, Trondheim Norway
+%21-23 June 2011
+%
+%Sverre G. Johnsen (sverre.g.johnsen@sintef.no)
+%SINTEF Materials and Chemistry
+
+
+%Required files:
+%   ExampleFile.tex
+%   xampleFile.nls
+%   CFD2011.bst
+%   CFD2011.cls
+%   CFD2011.sty
+%   References.bib
+
+%Example-specific files:
+%   figure.eps
+%   Table.tex
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+\title{Industrial Applications of CFD}
+\paperID{CFD11-52}
+\author{Ola}{Nordmann} %{forename}{surname}
+\presenting  %the previous author is presenting the paper (name becomes underlined)
+\address{SINTEF Materials and Chemistry, 7465 Trondheim, NORWAY}%affiliation of the previous author
+\email{ola.nordmann@sintef.no}%e-mail address of the previous author
+\author{Zhi}{L. Xie}
+\address{NTNU Department of Physics, 7491 Trondheim, NORWAY}
+\email{lin.xie@ntnu.no}
+%\author{Sverre}{G. Johnsen}
+%\address{SINTEF Materials and Chemistry, 7465 Trondheim, NORWAY}
+%\email{sverre.g.johnsen@sintef.no}
+
+
+
+\begin{document}
+\maketitle  %create the title page
+\headers   %create the page headers and footers
+
+\newpage
+
+\section{The least-squares method}
+Let us write our system of equations as follows:
+
+\begin{eqnarray}
+\mathcal{L} \mathbf{f} = \mathbf{g} \quad \mbox{in} \ \Omega \label{eq:Problem} \\
+\mathcal{B} \mathbf{f} = \mathbf{f_\Gamma} \quad \mbox{on} \ \Gamma \label{eq:Boundary}
+\end{eqnarray}
+
+\noindent where $\Omega$ is the domain of the system, $\Gamma$ is the boundary of the domain, $\mathcal{L}$ is a functional operator, and $\mathcal{B}$ is the trace operator. Equation \ref{eq:Boundary} represents the equations of the boundary conditions, while  equation \ref{eq:Problem} represents the main equations of the problem. 
+
+In this manner, the norm equivalent functional is defined as follows:
+
+\begin{eqnarray} 
+\mathcal{J}(\mathbf{f})\equiv  \frac{1}{2}\parallel \mathcal{L} \mathbf{f} -\mathbf{g} \parallel_{Y(\Omega)}^2 + \frac{1}{2} \parallel \mathcal{B}\mathbf{f} - \mathbf{f}_{\Gamma} \parallel_{Y(\Gamma)}^2 
+\label{eq:WeakLSQ}
+\end{eqnarray}
+
+This functional is a measure of the residual of an aproximating function $\mathbf{f}\in X(\Omega)$.
+The residual of the boundary equations is included in equation \ref{eq:WeakLSQ} to allow a weak imposition of the boundary conditions. That is, we allow the use of spaces $X(\Omega)$ that are not constrained to satisfy these conditions.
+
+It is assumed that the problem is well-posed and that the operators $\mathcal{L}$ and $\mathcal{B}$ conform a continuous mapping of the function space $X(\Omega)\times X(\Gamma)$ on the space $Y(\Omega) \times Y(\Gamma)$. Under these conditions, a norm equivalence between the norm of the residual and the norm of the error is established. That is, finding a function $\mathbf{f}\in X(\Omega)$ that minimizes the functional $\mathcal{J}(\mathbf{f})$ is equivalent to finding the approximating function in $X(\Omega)$ which is closest to the exact solution to the problem.
+
+Therefore, the least squares method is based on finding an $\mathbf{f} \in X(\Omega)$ such that this functional is minimized. 
+%
+%The spectral element method of the least squares type consists in sub-dividing the computational domain $\Omega$ into $N_e$ non--overlapping sub--domains $\Omega_e$, called spectral elements. We then look for the minimizing function within each spectral element $\mathbf{f}_P^e \in X_P(\Omega_e) \subset X(\Omega_e)$ such that:
+%
+%\begin{eqnarray}
+%\mathbf{f}_P^e&=&\sum_{j=0}^{N_p-1} \mathbf{b}_j^e \varphi_j^e \label{eq:suma} \\
+%\mathbf{f}_P&=&\bigcup _{e=1}^{N_e}\mathbf{f}_P^e
+%\end{eqnarray}
+%
+%\noindent where $\mathbf{b}_j^e$ are the coefficients of the expansion for the spectral element $e$. 
+
+\subsection{Solution procedure}
+Using variational analysis, minimizing the functional $\mathcal{J}(\mathbf{f})$ is equivalent to finding $\mathbf{f} \in X(\Omega)$ such that:
+
+\begin{eqnarray}
+\lim_{\epsilon \to 0} \frac{d}{d\epsilon}{\mathcal{J}(\mathbf{f}+\epsilon \ \mathbf{w})}=0 && \forall \mathbf{w} \in X(\Omega)
+\label{eq:minimization}
+\end{eqnarray}
+
+\noindent where $X(\Omega)$ is the space of admissible functions.
+
+We use the $L^2$ norm defined as $\parallel \bullet  \parallel_{Y(\Omega)}^2= \langle \bullet, \bullet \rangle= \int_\Omega  \bullet \bullet   \ d\Omega$ for simplicity. Using $\mathcal{E} {(}\mathbf{f} {)}=\mathcal{L}\mathbf{f}-\mathbf{g}$ to represent the equations, we express the norm equivalent functional as:
+
+\begin{equation}
+\mathcal{J}(\mathbf{f})\equiv  \frac{1}{2} \langle \mathcal{E} {(}\mathbf{f} {)},\mathcal{E} {(}\mathbf{f} {)} \rangle
+\end{equation}
+
+Here, we leave aside the equations for the boundary conditions. The extension of the solution procedure to these is straight-forward. 
+
+In practice, we restrict the search of the minimizing function to a finite--dimensional function space such that $\mathbf{f}_P \in X_P(\Omega) \subset X(\Omega)$ and $X_P(\Omega)= span\{ \varphi_0,...,\varphi_P \} $.
+Equation \ref{eq:minimization} yields then the equivalent problem: find $\mathbf{f_P} \in X_P(\Omega)$ such that:
+
+\begin{equation}
+\big\langle \frac{\partial\mathcal{E}}{\partial \mathbf{f}}\mathbf{w} , \mathcal{E}(\mathbf{f_P}) \big\rangle=\mathcal{G}=0 \ ,\ \ \forall \mathbf{w}\in X_P(\Omega)
+\end{equation}
+
+
+Here, $\frac{\partial\mathcal{E}}{\partial \mathbf{f}}$ is the operator obtained by dividing the different equations by the different variables. It can be divided in rows which represent each equation, and in columns which represent the operator affecting each variable in each equation. That is,
+
+\begin{eqnarray}
+\mathbf{f}=\left[ \begin{array}{ccccc} f_1 & ... & f_{v} & ... & f_{N_v} \end{array} \right]^T \nonumber\\
+ {\mathcal{E}} {\frac{\partial\mathcal{E}}{\partial \mathbf{f}}}=\left[ \begin{array}{ccccc}
+ {\frac{\partial\mathcal{E}_{1}}{\partial \mathbf{f_1}}} & ... &  {\frac{\partial\mathcal{E}_{1}}{\partial \mathbf{f_v}}} & ... &  {\frac{\partial\mathcal{E}_{1}}{\partial \mathbf{f_{N_v}}}} \\
+... & ... & ... & ... & ... \\
+ {\frac{\partial\mathcal{E}_{c}}{\partial \mathbf{f_{1}}}} & ... &  {\frac{\partial\mathcal{E}_{c}}{\partial \mathbf{f_{v}}}} & ... &  {\frac{\partial\mathcal{E}_{c}}{\partial \mathbf{f_{N_v}}}} \\
+... & ... & ... & ... & ... \\
+ {\frac{\partial\mathcal{E}_{N_c}}{\partial \mathbf{f_{1}}}} & ... &  {\frac{\partial\mathcal{E}_{N_c}}{\partial \mathbf{f_{v}}}} & ... &  {\frac{\partial\mathcal{E}_{N_c}}{\partial \mathbf{f_{N_v}}}} \\
+\end{array} \right] 
+\label{eq:eqOp}
+\end{eqnarray}
+
+\noindent where $N_v$ is the number of variables and $N_c$ is the number of equations.
+
+For linear problems, $\frac{\partial\mathcal{E}}{\partial \mathbf{f}}\mathbf{w}=\mathcal{L}\mathbf{w}$, and the problem is reduced to finding $\mathbf{f_P} \in X_P(\Omega)$ such that:
+
+
+\begin{eqnarray}
+\mathcal{A}(\mathbf{f_P},\mathbf{w})=\mathcal{F}(\mathbf{w}) \ ,\ \forall \mathbf{w} \ \in X_P(\Omega)
+\label{eq:equivalent}
+\end{eqnarray}
+
+\noindent where
+
+\begin{eqnarray}
+\mathcal{A}(\mathbf{f},\mathbf{w})= \langle \mathcal{L}\mathbf{f},\mathcal{L}\mathbf{w} \rangle \nonumber \\ 
+F(\mathbf{w})= \langle \mathbf{g},\mathcal{L}\mathbf{w} \rangle 
+\label{eq:equivLinear}
+\end{eqnarray}
+
+
+
+
+For non-linear problems, a seed solution $\mathbf{f^*_P}$ is proposed, and the Newton-Raphson method is used to iterate until the minimizing solution is found. This method is based on the expansion in Taylor series of $\mathcal{G}$ around $\mathbf{f^*_P}$, and yields the following equivalent problem: find $\delta\mathbf{f_P}=\mathbf{f_P}-\mathbf{f^*_P} \in X_P(\Omega)$ such that:
+
+\begin{eqnarray}
+\big\langle \frac{\partial}{\partial \mathbf{f}} \left(\frac{\partial\mathcal{E}}{\partial \mathbf{f}}\mathbf{w}\right)^*\mathbf{\delta f_P} , \mathcal{E}(\mathbf{f^*_P}) \big\rangle  \nonumber \\
++\big\langle \frac{\partial \mathcal{E}}{\partial \mathbf{f}}^*\mathbf{\delta f_P} , \frac{\partial \mathcal{E}}{\partial \mathbf{f}}^*\mathbf{w} \big\rangle +
+\big\langle \mathcal{E}(\mathbf{f^*_P}) , \frac{\partial \mathcal{E}}{\partial \mathbf{f}}^*\mathbf{w} \big\rangle =0 \ ,\ \mathbf{w} \ \in X_P(\Omega)
+\end{eqnarray}
+
+The first term is usually set to zero \cite{Winterscheidt1994, Codd2001}. This term is dominated by the others near the solution. Furthermore, the absence of this term simplifies greatly the computation and does not affect the method, only the way in which the solution is looked for.
+
+The equivalent problem to be solved is to find $\mathbf{f_P} \in X_P(\Omega)$ such that equation \ref{eq:equivalent} is fulfilled, with:
+
+
+\begin{eqnarray}
+\mathcal{A}(\mathbf{f},\mathbf{w})= \big\langle \frac{\partial \mathcal{E}}{\partial \mathbf{f}}^*\mathbf{f} ,  \frac{\partial \mathcal{E}}{\partial \mathbf{f}}^*\mathbf{w} \big\rangle \nonumber \\
+F(\mathbf{w})= \big\langle \frac{\partial \mathcal{E}}{\partial \mathbf{f}}^*\mathbf{f^*}-\mathcal{E}(\mathbf{f^*}) , \frac{\partial \mathcal{E}}{\partial \mathbf{f}}^*\mathbf{w} \big\rangle 
+\label{eq:equivNR}
+\end{eqnarray}
+
+%\begin{equation}
+%\big\langle \frac{\partial \mathcal{E}}{\partial \mathbf{f}}|_0\mathbf{f} ,  \frac{\partial \mathcal{E}}{\partial \mathbf{f}}|_0\mathbf{w} \big\rangle =
+%\big\langle \frac{\partial \mathcal{E}}{\partial \mathbf{f}}|_0\mathbf{f_0}-\mathcal{E}\mathbf{f_0} , \frac{\partial \mathcal{E}}{\partial \mathbf{f}}|_0\mathbf{w} \big\rangle\ \ , \ \forall \mathbf{w} \in X(\Omega)
+%\end{equation}
+
+Comparing equation \ref{eq:equivNR} to equation \ref{eq:equivLinear}, this procedure is equivalent to linearizing the equations using the Newton-Raphson method and then applying the least-squares method to the resulting linear problem $ \frac{\partial \mathcal{E}}{\partial \mathbf{f}}^*\mathbf{f}=\frac{\partial \mathcal{E}}{\partial \mathbf{f}}^*\mathbf{f^*}-\mathcal{E}(\mathbf{f^*})$. The Picard method (also known as fixed point or direct substitution method) has also been used to linearize the equations \cite{Sporleder2010}.
+
+The algebraic set of equations corresponding to the equivalent problem is found expanding the approximate solution (equation \ref{eq:suma}). The internal products are approximated numerically using quadrature rules. Thus, the system of algebraic equations is given as follows:
+
+\begin{equation}
+\mathbf{A} \mathbf{b} = \mathbf{F}
+\end{equation}
+
+\noindent where $\mathbf{b}$ is the vector of coefficients of the expansion in equation \ref{eq:suma}, and where:
+
+\begin{eqnarray}
+\mathbf{A}=\mathbf{L}^T\mathbf{W}\mathbf{L} \nonumber \\
+\mathbf{F}=\mathbf{L}^T\mathbf{W}\mathbf{G} \nonumber
+\end{eqnarray}
+
+$\mathbf{L}$ is called the problem operator matrix, $\mathbf{W}$ is a diagonal matrix built with the quadrature weights and $\mathbf{G}$ is called source vector. The three can be subdivided analogously to equation \ref{eq:eqOp}:
+
+\begin{eqnarray}
+\mathbf{G}=\left[ \begin{array}{ccccc} G_1 & ... & G_{c} & ... & G_{N_c} \end{array} \right]^T \nonumber\\
+\mathbf{L}=\left[ \begin{array}{ccccc}
+L_{11} & ... & L_{1v} & ... & L_{1N_v} \\
+... & ... & ... & ... & ... \\
+L_{c1} & ... & L_{cv} & ... & L_{cN_v} \\
+... & ... & ... & ... & ... \\
+L_{N_c1} & ... & L_{N_cv} & ... & L_{N_cN_v} \\
+\end{array} \right] 
+\end{eqnarray}
+
+\noindent where:
+
+\begin{eqnarray}
+\left[L_{cv}\right]_{qk}&=&\left(\frac{\partial \mathcal{E}_c}{\partial \mathbf{f}}\right)^*_v \varphi_k (\mathbf{r_q}) \nonumber \\
+\left[G_{c}\right]_{q}&=&\frac{\partial \mathcal{E}_c}{\partial \mathbf{f}}^*\mathbf{f_P^*}(\mathbf{r_q})-\mathcal{E}_c(\mathbf{f_P^*}(\mathbf{r_q}))
+\end{eqnarray}
+
+Here, $\mathbf{r_q}$ is the quadrature point $q$.
+
+\section{Numerical examples}
+\textcolor{blue}{Presentar el modelo}
+
+\begin{eqnarray}
+q(z,\psi)\frac{\partial \phi(z,\xi)}{dz} +\phi(z,\xi)\int h(z,\xi\rightarrow\hat{\xi})d\hat{\xi} \nonumber \\
+-\int \phi(z,\hat{\xi}) h(z,\xi\rightarrow\hat{\xi})d\hat{\xi} = S(z,\xi)
+\end{eqnarray}
+
+The equation is linear when solved for $\phi(z,\xi)$. Thus, $\frac{\partial \mathcal{E}}{\partial \phi}\bullet=\mathcal{L}\bullet=q(z,\psi)\frac{\partial \bullet}{dz} +\int h(z,\xi\rightarrow\hat{\xi})d\hat{\xi}\bullet -\int h(z,\xi\rightarrow\hat{\xi})\bullet d\hat{\xi}$. The equation presents a derivative, an identity and an integral operator applied to $\phi$. In matricial form:
+
+\begin{eqnarray}
+\mathbf{L}&=&\mathbf{C_1}\mathbf{Dz}+\mathbf{C_2}\mathbf{H}-\mathbf{I_h} \\
+\mathbf{G}&=&\mathbf{S}
+\end{eqnarray}
+
+\noindent with:
+
+\begin{eqnarray}
+\left[\mathbf{C_1}\right]_{qj}&=& \delta_{qj}q(z_q,\xi_q) \nonumber \\
+\left[\mathbf{C_2}\right]_{qj}&=& \delta_{qj}\int h(z_q,\xi_q\rightarrow\hat{\xi})d\hat{\xi} \nonumber \\
+\left[\mathbf{S}\right]_{q}&=& S(z_q,\xi_q) \nonumber 
+\end{eqnarray}
+
+\noindent where $\delta_{qj}$ is the Kronecker delta. The other matrices, namely $\mathbf{H}$, $\mathbf{D_z}$, and $\mathbf{I_h}$ are called operator matrices.
+
+$\mathbf{H}$ is the identity operator matrix, and is defined as follows:
+
+\begin{equation}
+\left[\mathbf{H}\right]_{qj}=\varphi_j(z_q,\xi_q)
+\end{equation}
+
+$\mathbf{D_z}$ is called the derivative operator matrix in z, and is defined as follows:
+
+\begin{equation}
+\left[\mathbf{D_z}\right]_{qj}=\frac{\partial \varphi_j}{\partial z}(z_q,\xi_q)
+\end{equation}
+
+$\mathbf{I_h}$ is the integral operator weighted with $h$, and is defined as follows:
+
+\begin{eqnarray}
+\left[\mathbf{I_h}\right]_{qj}&=&\int h(z_q,\xi_q\rightarrow\hat{\xi})\varphi_j(z_q,\hat{\xi}) d\hat{\xi}\nonumber \\
+&=&\sum_k h(\xi_q\rightarrow s_k \rightarrow\xi_q)\varphi_j(z_q,s_k) \omega_k
+\end{eqnarray}
+
+Here, we define new quadrature points and weights such that $s_k$ exists within the integration boundaries for each row of the integral operator matrix.
+
+
+%\abstract{
+%  This file is an example \LaTeX file for submission to CFD2011.  A
+%  limit of 10 pages applies.
+%}
+%\keywords{
+%  CFD, hydrodynamics, chemical reactors
+%}
+%\normalfont\normalsize
+%
+%
+%
+%%\section{Nomenclature}
+%A complete list of symbols used, with dimensions, is required.
+%%the nomenclature needs to be entered into the file ExampleFile.nls
+%\printnomenclature[0.7cm]  
+%\vskip .1em
+%
+%
+%\section{Introduction}
+%The introduction goes here.
+%
+%
+%\newpage
+%
+%
+%
+%\section{Model Description}
+%You should give a thorough description of your model.
+%\vspace{4cm}
+%\subsection{Example of Subheading}
+%Here is how to produce a numbered equation under a second level
+%heading \cite{James1988}.
+%\vspace{2cm}\\
+%\emph{Continuity equation}
+%\begin{equation}
+%  \frac{\partial \rho_G}{\partial t}+\nabla\left(\rho_G\mathbf
+%    u\right)=0
+%\end{equation}
+%
+%\subsubsection*{Example of Sub-subheading}
+%This is how \cite{Luke1988} produced an unnumbered equation under a
+%third level heading.
+%\begin{equation}
+%  \mathbf J=\sigma(\mathbf E+\mathbf u\times\mathbf B)
+%\end{equation}
+%\newpage
+%
+%\InsFig{figure}{Schematic diagram of geometry.}{label1}
+%\InsFigRot{figure}{Rotated schematic diagram of geometry.}{label2}
+%
+%
+%\section{Results}
+%The results of using the \LaTeX template is a great looking paper.
+%In Figures \ref{fig:label1} and \ref{fig:label2} it can be seen how figures are easily included.
+%In Table \ref{tab:label} it is seen how we can include a table.
+%The table is constructed in the file table.tex, where also the table caption and label are defined.
+%
+%
+%\newpage
+%\InsTab{Table}
+%
+%
+%\section{Conclusion}
+%The conclusions are:
+%\begin{enumerate}
+%  \item Trondheim is a nice city.
+%  \item CFD is great fun, and useful too.
+%\end{enumerate}
+%
+\newpage
+%
+%
+%% %---------------------------
+%% %BIBLIOGRAPHY
+%% %---------------------------
+%The bibliography is created using BiBTeX
+\bibliographystyle{CFD2011}
+\bibliography{MSTE}
+
+
+%\newpage
+%\section{Appendix A}
+%List of animation files:
+%s10.avi Motion of the spherical particles.
+%v10.mped Flow field around each particle.
+
+
+\end{document}

@@ -52,34 +52,48 @@
 
 \section{Introduction}
 
-\TODO{    * Describe traditional approaches for porous media problems}
-\TODO{     * Introduce the concept of the topology of porous media and define the pore size distribution. (esto es nuevo?) NO, tengo referencias de hace unos anios.}
-\TODO{     * Describe how porous media problems can be affected by the pore scale (capillarity, heterogeneous reactions, permeability and channelling)}
-\TODO{     * Introduce the MSTE}
-\TODO{     * Comment on the challenges for solving the MSTE}
+Theories for studying porous media were first formulated as early the end of the eighteen century after the volume fraction concept was introduced for describing mud. Half a century later one of the most basic law for saturated porous solids was established by Henry Darcy, i.e. the flow velocity of the liquid in a porous solid is proportional to the pressure gradient. Since then more complex theories for predicting the proportionality constant, incorporating the capillary force and considering deformable media with the definition of the consolidation problem \citep{Boer1992}. 
+
+Studies on the water-soil characteristic curve \citep{durner1994}, experimental characterization techniques such as gas adsorption or mercury porosimetry \citep{Navas,Jaroniec1997,Abell1999}(nitrogen adsorption and mercury) and the popularization of pore networks \citep{zhang1994, held2001, blunt2002, piri2005, ahrenholz2008, sholokhova2009} have solidify the concept of coexisting different-size pores, better represented as the pore size distribution, e.g. see \cite{dullien1991}.
+
+Indeed, there are many different phenomena that will be affected by the pore size, as for example the physical principles of any of the experimental methods mentioned before. At the same time, heterogeneous reactions and the pore hydraulic resistivity are expected to depend strongly with the pore size. Therefore there is a clear need for adopting models that are able to capture and use the information on the pore size distribution in an efficient way.
+
+The multi-scale transport equation for porous media (MSTE) was proposed as an extension of approaches considering a finite number of groups as studied for example by \cite{Chen1989}, \cite{bouffard2001}. \cite{DupuySchwarz} introduced one internal coordinate to the continuity problem for accounting the multi scale transport of species and the scale-dependent physics. Furthermore, the MSTE defines a inter-pore redistribution function $h$ that makes the equation open and requires further research to find the most adequate closure or model.
+
+However, the incorporation of one internal coordinate to the transport equation introduces one extra dimension in complexity. Not only all the main variables, depend now on the pore scale, but the partial differential equation system is now an integro-partial differential equation system. This brings problems at the time of choosing the most suitable solution method. 
+
 \TODO{     * Compare the MSTE with other internal variable problems and suggest LSQ as a possibility.}
+
 \TODO{     * Introduce LSQ}
 
 
 
-\TODO{           o State the scope of the article.}
 
-\TODO{     * State clearly that the paper will not address how to find the MSTE kernels. No comparison with experiments is given.}
-\TODO{     * Suitability of the method will be shown by the manufactured solution method.}
-\TODO{     * Mention the assumptions of steady state, etc, for the present analysis.}
+The scope of the present work does not allow us to address how to find any of the kernels of the MSTE nor any comparison with experiments. We are interested in the study of the suitability of the LSQ method for the solution of the MSTE for porous media, and this will be achieved by the manufactured solution method. We will only focus here in the steady state case, in one dimension only.
 
-
-\TODO{     * This paper proposes and explains how to solve MSTE with LSQ.}
-
+The objective of this paper is to propose and explain how to use LSQ for the solution of the multi-scale transport equation for porous media. The multi-scale transport, the solution method and a numerical example are given in the following three sections.
 
 \section{Model}
 
-\section{    * Explain the porosity  distribution concept}
-\section{    * Explain the permeability, advective velocity per pore scale.}
-\section{    * Explain the redistribution}
-\section{    * Explain the meaning of the cumulative distribution functions}
-\section{    * Explain MSTE}
-\section{    * Point out challenges for solving the equation}
+The term pore-size have been used loosely in the literature and needs to be addressed first. \cite{Dullien} proposed to use twice the hydraulic radius as a convenient definition but others might work as well in the present approach since what we are after is a characteristic length that will represent the pore scale. Any of these choices requires a proper definition of a pore as a unity, for which any arbitrary definition of a portion of the void volume can chosen where a pore size can be measure (e.g. hydraulic radius) for each pore. Most pore networks agree on the definition of these elementary units. Each pore will therefore have a volume. In the MSTE, all the void volume is assigned to pores, and the concept of throat is not needed making a difference with some pore network strategies. Let's define $\xi$ as the pore size, and $\epsilon(\xi)$ the summed volume for all the pores of size $\xi$ per volume unit.
+
+On average, the permeability will be different for each pore size as well, $k(\xi)$. A driven force will produce an advective velocity of the fluid at the scale $\xi$ denoted as $v(\xi)$, and the discharge (or slip velocity) for the same scale is $q(\xi)=\epsilon(\xi) v(\xi)$.
+
+\cite{DupuySchwarz} introduce the concept of the redistribution function $h(\xi_1 \rightarrow \xi_2)$ as the discharge from pores of size $\xi_1$ into pores of sizes $\xi_2$. This is a measure of the mixing between pores of different scales.
+
+The $\epsilon(\xi)d\xi$ and $q(\xi)d\xi$ are the probability density functions for porosity and discharge. Their definition is sometimes clarified by defining the cumulative distribution function, $F_{\epsilon}(\xi)=\int_0^{\xi}\epsilon(\hat \xi)d\hat\xi$ and $F_{q}(\xi)=\int_0^{\xi}q(\hat\xi)d\hat\xi$. $F_{\epsilon}(\xi)$ is dimensionless and represents the porosity of a solid media obtained by considering all the pores of size smaller or equal to $\xi$.
+
+The multi-scale transport for a tracer, specie $i$, in all the pores assuming one dimension ($z$) and steady state case can be written as \citep{DupuySchwarz}:
+
+\begin{align}
+q(z, \xi) \cdot \frac{\partial \phi_{i}(z, \xi)}{\partial z}  = 
+ S_{i}(z, \xi) + \int [\phi_{i}(z, \hat \xi) - \phi_{i}(z, \xi)] h(z, \hat \xi \rightarrow \xi) d\hat \xi . 
+\label{eq:ss2}
+\end{align}
+
+The left hand side and first term of the right hand side of the equation \ref{eq:ss2} are the convection per scale and the source per scale and present no major interaction between scales. However, the integral on the right hand side couples different scales and makes impossible to solve the problem for each scale independently. It should be pointed out that advection can be happening at different speeds ($\tfrac{\partial q}{\partial \xi} \neq 0$) and the source term can also be written independently for each pore-size.
+
+\TODO{    * Point out challenges for solving the equation}
 
 \section{The least-squares method}
 Let us write our system of equations as follows:

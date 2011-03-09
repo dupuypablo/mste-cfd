@@ -42,7 +42,7 @@
 %\email{sverre.g.johnsen@sintef.no}
 
 \newcommand{\TODO}[1]{\textcolor{blue}{TODO: #1} \\}
-
+\newcommand{\Fede}[1]{\textcolor{green}{#1} \\}
 
 \begin{document}
 \maketitle  %create the title page
@@ -51,6 +51,7 @@
 \newpage
 
 \section{Introduction}
+\Fede{FEDE WAS HERE!!! Faltan algunas referencias, y tenemos que coordinarlas. Ponele, mi primer paper en CFD lo cito como Sporleder2010, pero creo que vos lo ten\'es como "sporleder" Intent\'e abrir el .bib con mi JabRef, pero me tir\'o error. Propongo indicar cambios que cada uno haga en las secciones en com\'un o secciones ajenas (si yo agrego una ecuaci\'on al explicar LSQ no indico nada, pero si lo hago en la intro s\'i, x ej.). Ah, y me sigue tirando errores de paquetes. A vos no? Tengo 13 errores y 33 bad boxes ahora :-D }
 
 Theories for studying porous media were first formulated as early the end of the eighteen century after the volume fraction concept was introduced for describing mud. Half a century later one of the most basic law for saturated porous solids was established by Henry Darcy, i.e. the flow velocity of the liquid in a porous solid is proportional to the pressure gradient. Since then more complex theories for predicting the proportionality constant, incorporating the capillary force and considering deformable media with the definition of the consolidation problem \citep{Boer1992}. 
 
@@ -146,7 +147,14 @@ We use the $L^2$ norm defined as $\parallel \bullet  \parallel_{Y(\Omega)}^2= \l
 
 Here, we leave aside the equations for the boundary conditions. The extension of the solution procedure to these is straight-forward. 
 
-In practice, we restrict the search of the minimizing function to a finite--dimensional function space such that $\mathbf{f}_P \in X_P(\Omega) \subset X(\Omega)$ and $X_P(\Omega)= span\{ \varphi_0,...,\varphi_P \} $.
+In practice, we restrict the search of the minimizing function to a finite--dimensional function space such that $\mathbf{f}_P \in X_P(\Omega) \subset X(\Omega)$ and $X_P(\Omega)= span\{ \varphi_0,...,\varphi_P \} $:
+
+\begin{eqnarray}
+\mathbf{f}_P^e&=&\sum_{j=0}^{N_p-1} \mathbf{b}_j^e \varphi_j^e \label{eq:suma} \\
+\mathbf{f}_P&=&\bigcup _{e=1}^{N_e}\mathbf{f}_P^e
+\end{eqnarray}
+
+
 Equation \ref{eq:minimization} yields then the equivalent problem: find $\mathbf{f_P} \in X_P(\Omega)$ such that:
 
 \begin{equation}

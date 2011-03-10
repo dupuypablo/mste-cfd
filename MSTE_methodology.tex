@@ -63,11 +63,9 @@ The multi-scale transport equation for porous media (MSTE) was proposed as an ex
 
 However, the incorporation of one internal coordinate to the transport equation introduces one extra dimension in complexity. Not only all the main variables, depend now on the pore scale, but the partial differential equation system is now an integro-partial differential equation system. This brings problems at the time of choosing the most suitable solution method. 
 
-\TODO{     * Compare the MSTE with other internal variable problems and suggest LSQ as a possibility.}
+Many other phenomena in nature can be described by an integro-differential equation with one or many internal coordinates. The Boltzmann transport equation has the molecule velocity as an internal coordinate. The transport equation applied to neutrons or its condensation into the diffusion equation for neutrons use the neutron energy as internal energy. Population balance problems use the particle, bubble or droplet size as internal coordinate. The least square method has been applied succesfully to population balance problems by \cite{Dorao05a}.
 
 \TODO{     * Introduce LSQ}
-
-
 
 
 The scope of the present work does not allow us to address how to find any of the kernels of the MSTE nor any comparison with experiments. We are interested in the study of the suitability of the LSQ method for the solution of the MSTE for porous media, and this will be achieved by the manufactured solution method. We will only focus here in the steady state case, in one dimension only.
@@ -306,47 +304,57 @@ Here, we define new quadrature points and weights such that $s_k$ exists within 
 
 \section{Numerical Example}
 
+We select the case of flow through a column for our numerical example. A one metre column filled with a packed bed of rocks has a porosity per scale given by $\epsilon({\xi})$. Liquid is introduced from the top which percoles down the column at a given discharge per scale given by $q({\xi})$. The pore-scale redistribution, $h$  is assumed proportional to the discharges.
+
+In the manufacturing solution method we propose a solution $\phi(\xi, z)$ and calculate analitically the value of the source. For this problem the values chosen are:
+
 \begin{align}
 \epsilon(\xi)=&A (\xi-\xi_0) (-\xi+\xi_f) \\
 q({\xi}) =&V \epsilon(\xi) \xi^2\\
 h(\hat \xi, \xi, z) =& q(\hat \xi) q(\xi)/L\\
-f(\xi, z) =& 10 z (1-M Log({\xi}/R))\\
+\phi(\xi, z) =& 10 z (1-M Log({\xi}/R))\\
 \nonumber S(\xi, z)=& 10 A V {\xi}^2 ({\xi}-\xi_0) (-{\xi}+\xi_f) \left(1-M \text{Log}\left[\frac{{\xi}}{R}\right]\right) +\\
 \nonumber  &A^2 M V^2  (360 L)^{-1} {\xi}^2 ({\xi}-\xi_0) ({\xi}-\xi_f) z \times ... \\
 \nonumber  &\big(-81 \xi_0^5+175 \xi_0^4 \xi_f-175 \xi_0 \xi_f^4+  ...\\
 \nonumber &81 \xi_f^5+60 \xi_0^4 (3 \xi_0-5 \xi_f) \text{Log}\left[\frac{\xi_0}{{\xi}}\right]+ ...\\
 & 60 (5 \xi_0-3 \xi_f) \xi_f^4 \text{Log}\left[\frac{\xi_f}{{\xi}}\right]\big)
 \end{align}
-\TODO{[REESCRIBIR ECUACIONES]}
 
-\TODO{Mention implementation details (polynomials and quadratures used, number of points, solver, etc.).  ouch... }
+\noindent with A=, V=, M= and M= \TODO{no me acuerdo}.
 
-\TODO{Explain and show q, epsilon and h. and BCs}
+\TODO{Mention implementation details (polynomials and quadratures used, number of points, solver, etc.).  ouch... GLL, 12 puntos como se ve en la figura}
+
+%\TODO{Explain and show q, epsilon and h. and BCs}
+
+Both the discharge, $q({\xi})$ and the porosity, $\epsilon({\xi})$ do not depend on the position along the column. Plot of the distribution and cummulative distribution for these two functions are given in Figure \ref{fig:profiles}.
 
 \InsFig{profiles}{Left column: porosity distribution (top) and cumulative porosity distribution (bottom). Middle column: discharge distribution (top) and cumulative discharge distribution (bottom). Right column: velocity per channel (top), and 1-metre residence time (bottom)}{profiles}
 
-\TODO{Describe what case could be described with this simplified model.}
+%\TODO{Describe what case could be described with this simplified model.}
 
-\TODO{Show solution (phi) and S.}
+The solution is shown in Figure \ref{fig:solution}. As the liquid flows down the column $\phi$ increases due to reactions happening inside the pores. Despite the source term is very different for different pore sizes (negative for large pores and positive for small pores, see Figure \ref{fig:source}) the tracer $\phi$ is exchanged between different pores scales tending to level out the differences. However the increase is larger for the small pores at all the length of the column (z values). The source term (Figure \ref{fig:source}) behaves differently for different pore scales. Large amounts of $\phi$ are generated for pores smaller than 5 mm, while a sink is observed in the largest pores. This behaviour for the source term mimic two compiting reactions. It models the case of a specie that is a product of an heterogeneous reaction but is a reactant of a reaction taking place in the liquid bulk. Heterogeneous reactions depend strongly of the surface to volume ratio which is much larger for small pore scales. At the same time the reactant is consumed in the larger pores in this case as the bulk reaction that consumes $\phi$ becomes more dominant.
 
-\InsFig{solution}{Solution}{solution}
-\InsFig{source}{Source}{source}
+\InsFig{solution}{Solution $\phi(z,\xi)$.}{solution}
 
-\TODO{Explain what is happening with phi and S in each scale, and the mixing by h.}
+\InsFig{source}{Source term $S(z,\xi)$. }{source}
+
+%\TODO{Explain what is happening with phi and S in each scale, and the mixing by h.}
 
 \TODO{Show and comment on convergence plot}
+
 
 \InsFig{convergence}{Convergence plot}{convergence}
 
 \section{Conclusion}
 
-\TODO{Contribution of this paper:}
+The conclusions of this paper are:
 
-\TODO{    * This paper proposes and explains how to solve MSTE with LSQ.}
-\TODO{    * Shows that LSQ solves the MSTE with exponential convergence.}
+\begin{itemize}
+\item The least square high order method is well suited for the solution of the multi-scale transport equation for porous media achieving exponencial convergence in the method order.
+\item A method has been described and can now be applied for the solution of transport and reactions problems in porous media.
+\end{itemize}
 
-
-\TODO{mas despues que tengamos todas las figuras}
+Future work still remains on the area of finding the most adequate kernels that best represent different porous media. Mainly empirical studies of the redistribution function need to be done.
 
 %\abstract{
 %  This file is an example \LaTeX file for submission to CFD2011.  A

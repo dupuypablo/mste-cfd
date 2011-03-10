@@ -43,6 +43,8 @@
 
 \newcommand{\TODO}[1]{\textcolor{blue}{TODO: #1} \\}
 \newcommand{\Fede}[1]{\textcolor{green}{#1} \\}
+\newcommand{\Pablo}[1]{\textcolor{blue}{#1}}
+
 
 \begin{document}
 \maketitle  %create the title page
@@ -98,23 +100,36 @@ The left hand side and first term of the right hand side of the equation \ref{eq
 Let us write our system of equations as follows:
 
 \begin{eqnarray}
+\mathcal{L} \phi = \mathbf{g} \quad \mbox{in} \ \Omega \label{eq:Problem} \\
+\mathcal{B} \phi = \mathbf{f_\Gamma} \quad \mbox{on} \ \Gamma \label{eq:Boundary}
+\end{eqnarray}
+
+\begin{eqnarray}
 \mathcal{L} \mathbf{f} = \mathbf{g} \quad \mbox{in} \ \Omega \label{eq:Problem} \\
 \mathcal{B} \mathbf{f} = \mathbf{f_\Gamma} \quad \mbox{on} \ \Gamma \label{eq:Boundary}
 \end{eqnarray}
 
 \noindent where $\Omega$ is the domain of the system, $\Gamma$ is the boundary of the domain, $\mathcal{L}$ is a functional operator, and $\mathcal{B}$ is the trace operator. Equation \ref{eq:Boundary} represents the equations of the boundary conditions, while  equation \ref{eq:Problem} represents the main equations of the problem. 
 
-In this manner, the norm equivalent functional is defined as follows:
+In this manner, \Pablo{a} norm equivalent functional \Pablo{can} defined as follows:
 
 \begin{eqnarray} 
-\mathcal{J}(\mathbf{f})\equiv  \frac{1}{2}\parallel \mathcal{L} \mathbf{f} -\mathbf{g} \parallel_{Y(\Omega)}^2 + \frac{1}{2} \parallel \mathcal{B}\mathbf{f} - \mathbf{f}_{\Gamma} \parallel_{Y(\Gamma)}^2 
+\mathcal{J}(\mathbf{f})\equiv  \frac{1}{2}\parallel \mathcal{L} \mathbf{f} -\mathbf{g} \parallel_{Y(\Omega)}^2 + \frac{1}{2} \parallel \mathcal{B}\mathbf{f} - \mathbf{f}_{\Gamma} \parallel_{Y(\Gamma)}^2. 
 \label{eq:WeakLSQ}
 \end{eqnarray}
 
-This functional is a measure of the residual of an aproximating function $\mathbf{f}\in X(\Omega)$.
-The residual of the boundary equations is included in equation \ref{eq:WeakLSQ} to allow a weak imposition of the boundary conditions. That is, we allow the use of spaces $X(\Omega)$ that are not constrained to satisfy these conditions.
 
-It is assumed that the problem is well-posed and that the operators $\mathcal{L}$ and $\mathcal{B}$ conform a continuous mapping of the function space $X(\Omega)\times X(\Gamma)$ on the space $Y(\Omega) \times Y(\Gamma)$. Under these conditions, a norm equivalence between the norm of the residual and the norm of the error is established. That is, finding a function $\mathbf{f}\in X(\Omega)$ that minimizes the functional $\mathcal{J}(\mathbf{f})$ is equivalent to finding the approximating function in $X(\Omega)$ which is closest to the exact solution to the problem.
+\begin{eqnarray} 
+\mathcal{J}(\mathbf{\bullet})\equiv  \frac{1}{2}\parallel \mathcal{L} \bullet -\mathbf{g} \parallel_{Y(\Omega)}^2 + \frac{1}{2} \parallel \mathcal{B}\bullet - \mathbf{f}_{\Gamma} \parallel_{Y(\Gamma)}^2. 
+\label{eq:WeakLSQ3}
+\end{eqnarray}
+
+\Pablo{The functional $\mathcal{J}(\mathbf{f})$} is a measure of the residual of an aproximating function $\mathbf{f}\in X(\Omega)$.
+The residual of the boundary equations is included in equation \ref{eq:WeakLSQ} \Pablo{(second term of the RHS)} to allow a weak imposition of the boundary conditions. That is, we allow the use of spaces $X(\Omega)$ that are not constrained to satisfy these conditions.
+
+It is assumed that the problem is well-posed and that the operators $\mathcal{L}$ and $\mathcal{B}$ conform a continuous mapping of the function space $X(\Omega)\times X(\Gamma)$ on the space $Y(\Omega) \times Y(\Gamma)$ \Pablo{EEEEhh.... quien es Y?}. Under these conditions, a norm equivalence between the norm of the residual and the norm of the error is established. That is, finding a function $\mathbf{f}\in X(\Omega)$ that minimizes the functional $\mathcal{J}(\mathbf{f})$ is equivalent to finding the approximating function in $X(\Omega)$ which is closest to the exact solution to the problem.
+
+\Pablo{Yo lo entiendo porque yo se LSQ (algo al menos)... pero no se como se explica mejor realmente... $\mathbf{f}$ es la solucion o es la aproximacion a la solucion? equacion 2 es inconsistente con el resto... o no? Es una muy poco feliz decision elegir el mismo symbolo para ambas, o no? Debido a que en nuestro problema la solucion es $\phi$ decidi hacer el cambio en la definicion del problema. Luego usamos $\mathbf{f}$ para la aprox solo.  Agregue un texto que capaz ayuda para aclarar ese punto.}
 
 Therefore, the least squares method is based on finding an $\mathbf{f} \in X(\Omega)$ such that this functional is minimized. 
 %
@@ -128,6 +143,8 @@ Therefore, the least squares method is based on finding an $\mathbf{f} \in X(\Om
 %\noindent where $\mathbf{b}_j^e$ are the coefficients of the expansion for the spectral element $e$. 
 
 \subsection{Solution procedure}
+
+\TODO{No he leido esta seccion todavia}
 Using variational analysis, minimizing the functional $\mathcal{J}(\mathbf{f})$ is equivalent to finding $\mathbf{f} \in X(\Omega)$ such that:
 
 \begin{eqnarray}
@@ -257,52 +274,7 @@ L_{N_c1} & ... & L_{N_cv} & ... & L_{N_cN_v} \\
 Here, $\mathbf{r_q}$ is the quadrature point $q$.
 
 \section{Numerical examples}
-\textcolor{blue}{Presentar el modelo}
 
-\begin{eqnarray}
-q(z,\psi)\frac{\partial \phi(z,\xi)}{dz} +\phi(z,\xi)\int h(z,\xi\rightarrow\hat{\xi})d\hat{\xi} \nonumber \\
--\int \phi(z,\hat{\xi}) h(z,\xi\rightarrow\hat{\xi})d\hat{\xi} = S(z,\xi)
-\end{eqnarray}
-
-The equation is linear when solved for $\phi(z,\xi)$. Thus, $\frac{\partial \mathcal{E}}{\partial \phi}\bullet=\mathcal{L}\bullet=q(z,\psi)\frac{\partial \bullet}{dz} +\int h(z,\xi\rightarrow\hat{\xi})d\hat{\xi}\bullet -\int h(z,\xi\rightarrow\hat{\xi})\bullet d\hat{\xi}$. The equation presents a derivative, an identity and an integral operator applied to $\phi$. In matricial form:
-
-\begin{eqnarray}
-\mathbf{L}&=&\mathbf{C_1}\mathbf{Dz}+\mathbf{C_2}\mathbf{H}-\mathbf{I_h} \\
-\mathbf{G}&=&\mathbf{S}
-\end{eqnarray}
-
-\noindent with:
-
-\begin{eqnarray}
-\left[\mathbf{C_1}\right]_{qj}&=& \delta_{qj}q(z_q,\xi_q) \nonumber \\
-\left[\mathbf{C_2}\right]_{qj}&=& \delta_{qj}\int h(z_q,\xi_q\rightarrow\hat{\xi})d\hat{\xi} \nonumber \\
-\left[\mathbf{S}\right]_{q}&=& S(z_q,\xi_q) \nonumber 
-\end{eqnarray}
-
-\noindent where $\delta_{qj}$ is the Kronecker delta. The other matrices, namely $\mathbf{H}$, $\mathbf{D_z}$, and $\mathbf{I_h}$ are called operator matrices.
-
-$\mathbf{H}$ is the identity operator matrix, and is defined as follows:
-
-\begin{equation}
-\left[\mathbf{H}\right]_{qj}=\varphi_j(z_q,\xi_q)
-\end{equation}
-
-$\mathbf{D_z}$ is called the derivative operator matrix in z, and is defined as follows:
-
-\begin{equation}
-\left[\mathbf{D_z}\right]_{qj}=\frac{\partial \varphi_j}{\partial z}(z_q,\xi_q)
-\end{equation}
-
-$\mathbf{I_h}$ is the integral operator weighted with $h$, and is defined as follows:
-
-\begin{eqnarray}
-\left[\mathbf{I_h}\right]_{qj}&=&\int h(z_q,\xi_q\rightarrow\hat{\xi})\varphi_j(z_q,\hat{\xi}) d\hat{\xi}\nonumber \\
-&=&\sum_k h(\xi_q\rightarrow s_k \rightarrow\xi_q)\varphi_j(z_q,s_k) \omega_k
-\end{eqnarray}
-
-Here, we define new quadrature points and weights such that $s_k$ exists within the integration boundaries for each row of the integral operator matrix.
-
-\section{Numerical Example}
 
 We select the case of flow through a column for our numerical example. A one metre column filled with a packed bed of rocks has a porosity per scale given by $\epsilon({\xi})$. Liquid is introduced from the top which percoles down the column at a given discharge per scale given by $q({\xi})$. The pore-scale redistribution, $h$  is assumed proportional to the discharges.
 
@@ -320,7 +292,57 @@ h(\hat \xi, \xi, z) =& q(\hat \xi) q(\xi)/L\\
 & 60 (5 \xi_0-3 \xi_f) \xi_f^4 \text{Log}\left[\frac{\xi_f}{{\xi}}\right]\big)
 \end{align}
 
-\noindent with A=, V=, M= and M= \TODO{no me acuerdo}.
+We rewrite the problem equation \ref{eq:ss2} as,
+
+\begin{eqnarray}
+q(z,\psi)\frac{\partial \phi(z,\xi)}{dz} +\phi(z,\xi)\int h(z,\xi\rightarrow\hat{\xi})d\hat{\xi} \nonumber \\
+-\int \phi(z,\hat{\xi}) h(z,\xi\rightarrow\hat{\xi})d\hat{\xi} = S(z,\xi)
+\end{eqnarray}
+
+The equation is linear when solved for $\phi(z,\xi)$. Thus, $\frac{\partial \mathcal{E}}{\partial \phi}\bullet=\mathcal{L}\bullet=q(z,\psi)\frac{\partial \bullet}{dz} +\int h(z,\xi\rightarrow\hat{\xi})d\hat{\xi}\bullet -\int h(z,\xi\rightarrow\hat{\xi})\bullet d\hat{\xi}$. The equation presents a derivative, an identity and an integral operator applied to $\phi$. In matricial form:
+
+\begin{eqnarray}
+\mathbf{L}&=&\mathbf{C_1}\mathbf{Dz}+\mathbf{C_2}\mathbf{H} \Pablo{+} \mathbf{I_h} \\
+\mathbf{G}&=&\mathbf{S}
+\end{eqnarray}
+
+\noindent with:
+
+\begin{eqnarray}
+\left[\mathbf{C_1}\right]_{qj}&=& \delta_{qj}q(z_q,\xi_q) \nonumber \\
+\left[\mathbf{C_2}\right]_{qj}&=& \delta_{qj}\int h(z_q,\xi_q\rightarrow\hat{\xi})d\hat{\xi} \nonumber \\
+\left[\mathbf{S}\right]_{q}&=& S(z_q,\xi_q) \nonumber 
+\end{eqnarray}
+
+\noindent where $\delta_{qj}$ is the Kronecker delta. The other matrices, namely $\mathbf{D_z}$, $\mathbf{H}$, and $\mathbf{I_h}$ are called operator matrices.
+
+
+$\mathbf{D_z}$ is called the derivative operator matrix in z, and is defined as follows:
+
+\begin{equation}
+\left[\mathbf{D_z}\right]_{qj}=\frac{\partial \varphi_j}{\partial z}(z_q,\xi_q)
+\end{equation}
+
+$\mathbf{H}$ is the identity operator matrix, and is defined as follows:
+
+\begin{equation}
+\left[\mathbf{H}\right]_{qj}=\varphi_j(z_q,\xi_q)
+\end{equation}
+
+$\mathbf{I_h}$ is the integral operator weighted with $h$, and is defined as follows:
+
+\begin{eqnarray}
+\left[\mathbf{I_h}\right]_{qj}&=& \Pablo{-} \int h(z_q,\xi_q\rightarrow\hat{\xi})\varphi_j(z_q,\hat{\xi}) d\hat{\xi}\nonumber \\
+&=& \Pablo{-} \sum_k h(\xi_q\rightarrow s_k \rightarrow\xi_q)\varphi_j(z_q,s_k) \omega_k
+\end{eqnarray}
+
+\Pablo{No hay que borrar el segundo $\xi$ dentro de h, del segundo renglon?}
+
+Here, we define new quadrature points and weights such that $s_k$ exists within the integration boundaries for each row of the integral operator matrix. For \Pablo{the present problem the integration limits are the domain limits.}
+
+\section{Results}
+
+\noindent Choosing the values A=, V=, M= and M= \TODO{no me acuerdo}.
 
 \TODO{Mention implementation details (polynomials and quadratures used, number of points, solver, etc.).  ouch... GLL, 12 puntos como se ve en la figura}
 

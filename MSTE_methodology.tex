@@ -306,6 +306,17 @@ Here, we define new quadrature points and weights such that $s_k$ exists within 
 
 \section{Numerical Example}
 
+\begin{align}
+\epsilon(\xi)=&A (\xi-\xi_0) (-\xi+\xi_f) \\
+q({\xi}) =&V \epsilon(\xi) \xi^2\\
+h(\hat \xi, \xi, z) =& q(\hat \xi) q(\xi)/L\\
+f(\xi, z) =& 10 z (1-M Log({\xi}/R))\\
+\nonumber S(\xi, z)=& 10 A V {\xi}^2 ({\xi}-\xi_0) (-{\xi}+\xi_f) \left(1-M \text{Log}\left[\frac{{\xi}}{R}\right]\right) +\\
+\nonumber  &A^2 M V^2  (360 L)^{-1} {\xi}^2 ({\xi}-\xi_0) ({\xi}-\xi_f) z \times ... \\
+\nonumber  &\big(-81 \xi_0^5+175 \xi_0^4 \xi_f-175 \xi_0 \xi_f^4+  ...\\
+\nonumber &81 \xi_f^5+60 \xi_0^4 (3 \xi_0-5 \xi_f) \text{Log}\left[\frac{\xi_0}{{\xi}}\right]+ ...\\
+& 60 (5 \xi_0-3 \xi_f) \xi_f^4 \text{Log}\left[\frac{\xi_f}{{\xi}}\right]\big)
+\end{align}
 \TODO{[REESCRIBIR ECUACIONES]}
 
 \TODO{Mention implementation details (polynomials and quadratures used, number of points, solver, etc.).  ouch... }

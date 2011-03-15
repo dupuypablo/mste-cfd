@@ -1,7 +1,7 @@
 \documentclass{CFD2011}
 \usepackage{CFD2011}
 
-
+\usepackage[normalem]{ulem}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %This template is created for complying with the author instructions for the 
 %8th International Conference on CFD in Oil & Gas, Metallurgical and Process Industries
@@ -28,58 +28,83 @@
 
 
 
-\title{Industrial Applications of CFD}
+\title{Application of the least-squares method to the multiscale transport equation in porous media}
 \paperID{CFD11-52}
-\author{Ola}{Nordmann} %{forename}{surname}
-\presenting  %the previous author is presenting the paper (name becomes underlined)
-\address{SINTEF Materials and Chemistry, 7465 Trondheim, NORWAY}%affiliation of the previous author
-\email{ola.nordmann@sintef.no}%e-mail address of the previous author
-\author{Zhi}{L. Xie}
-\address{NTNU Department of Physics, 7491 Trondheim, NORWAY}
-\email{lin.xie@ntnu.no}
+\author{Federico}{Sporleder} %{forename}{surname}
+%\presenting  %the previous author is presenting the paper (name becomes underlined)
+\address{NTNU Department of Chemical Engineering, 7491 Trondheim, NORWAY}%affiliation of the previous author
+\email{federico.sporleder@nt.ntnu.no}%e-mail address of the previous author
+\author{Pablo}{M. Dupuy}
+\presenting
+\address{CSIRO Mathematics, Informatics and Statistics, 3169 Clayton South VIC, Australia}
+\email{pablo.dupuy@csiro.au}
 %\author{Sverre}{G. Johnsen}
 %\address{SINTEF Materials and Chemistry, 7465 Trondheim, NORWAY}
 %\email{sverre.g.johnsen@sintef.no}
 
 \newcommand{\TODO}[1]{\textcolor{blue}{TODO: #1} \\}
-\newcommand{\Fede}[1]{\textcolor{green}{#1} \\}
+\newcommand{\Fede}[1]{\textcolor{green}{Fede: #1} \\}
 \newcommand{\Pablo}[1]{\textcolor{blue}{#1}}
-
+\newcommand{\newf}[1]{\textcolor{green}{#1}}
+\newcommand{\nof}[1]{\textcolor{cyan}{{\sout{#1}}}}
 
 \begin{document}
 \maketitle  %create the title page
 \headers   %create the page headers and footers
 
-\newpage
+\abstract{
+  This file is an example \LaTeX file for submission to CFD2011.  A
+  limit of 10 pages applies.
+}
+\keywords{
+  CFD, hydrodynamics, chemical reactors
+}
+\normalfont\normalsize
 
+
+
+%\section{Nomenclature}
+%the nomenclature needs to be entered into the file ExampleFile.nls
+\printnomenclature[0.7cm]  
+\vskip .1em
+
+\TODO{NOMENCLATURA!!}
 \section{Introduction}
-%\Fede{FEDE WAS HERE!!! Faltan algunas referencias, y tenemos que coordinarlas. Ponele, mi primer paper en CFD lo cito como Sporleder2010, pero creo que vos lo ten\'es como "sporleder" Intent\'e abrir el .bib con mi JabRef, pero me tir\'o error. Propongo indicar cambios que cada uno haga en las secciones en com\'un o secciones ajenas (si yo agrego una ecuaci\'on al explicar LSQ no indico nada, pero si lo hago en la intro s\'i, x ej.). Ah, y me sigue tirando errores de paquetes. A vos no? Tengo 13 errores y 33 bad boxes ahora :-D }
+Theories for studying porous media were first formulated as early \newf{as }the end of the eighteen century\newf{,} after the volume fraction concept was introduced for describing mud. Half a century later\newf{,} one of the most basic law\newf{s} for saturated porous solids was established by Henry Darcy, i.e. the flow velocity of the liquid in a porous solid is proportional to the pressure gradient. Since then\newf{, increasingly} more complex theories for predicting the proportionality constant \newf{have arised}, incorporating the capillary force and considering deformable media with the definition of the consolidation problem \citep{Boer1992}. 
 
-Theories for studying porous media were first formulated as early the end of the eighteen century after the volume fraction concept was introduced for describing mud. Half a century later one of the most basic law for saturated porous solids was established by Henry Darcy, i.e. the flow velocity of the liquid in a porous solid is proportional to the pressure gradient. Since then more complex theories for predicting the proportionality constant, incorporating the capillary force and considering deformable media with the definition of the consolidation problem \citep{Boer1992}. 
-
-Studies on the water-soil characteristic curve \citep{durner1994}, experimental characterization techniques such as gas adsorption or mercury porosimetry \citep{Navas,Jaroniec1997,Abell1999}(nitrogen adsorption and mercury) and the popularization of pore networks \citep{zhang1994, held2001, blunt2002, piri2005, ahrenholz2008, sholokhova2009} have solidify the concept of coexisting different-size pores, better represented as the pore size distribution, e.g. see \cite{dullien1991}.
+Studies on the water-soil characteristic curve \citep{durner1994}, experimental characterization techniques such as gas adsorption or mercury porosimetry \citep{Navas,Jaroniec1997,Abell1999}\nof{(nitrogen adsorption and mercury)}\newf{,} and the popularization of pore networks \citep{zhang1994, held2001, blunt2002, piri2005, ahrenholz2008, sholokhova2009} have \nof{solidify}\newf{consolidated} the concept of coexisting \nof{different-size }pores\nof{, better represented as the} \newf{of different sizes, which can be better represented with a} pore size distribution, e.g. see \cite{dullien1991}.
 
 Indeed, there are many different phenomena that will be affected by the pore size, as for example the physical principles of any of the experimental methods mentioned before. At the same time, heterogeneous reactions and the pore hydraulic resistivity are expected to depend strongly with the pore size. Therefore there is a clear need for adopting models that are able to capture and use the information on the pore size distribution in an efficient way.
 
 The multi-scale transport equation for porous media (MSTE) was proposed as an extension of approaches considering a finite number of groups as studied for example by \cite{Chen1989}, \cite{bouffard2001}. \cite{DupuySchwarz} introduced one internal coordinate to the continuity problem for accounting the multi scale transport of species and the scale-dependent physics. Furthermore, the MSTE defines a inter-pore redistribution function $h$ that makes the equation open and requires further research to find the most adequate closure or model.
 
-However, the incorporation of one internal coordinate to the transport equation introduces one extra dimension in complexity. Not only all the main variables, depend now on the pore scale, but the partial differential equation system is now an integro-partial differential equation system. This brings problems at the time of choosing the most suitable solution method. 
+However, the incorporation of one internal coordinate to the transport equation introduces one extra dimension in complexity. Not only all the main variables\nof{,} depend now on the pore scale, but \newf{also }the partial differential equation system \nof{is now}\newf{becomes} an integro-partial differential equation system. This brings problems at the time of choosing the most suitable solution method. 
 
-Many other phenomena in nature can be described by an integro-differential equation with one or many internal coordinates. The Boltzmann transport equation has the molecule velocity as an internal coordinate. The transport equation applied to neutrons or its condensation into the diffusion equation for neutrons use the neutron energy as internal energy. Population balance problems use the particle, bubble or droplet size as internal coordinate. The least square method has been applied succesfully to population balance problems by \cite{Dorao05a}.
+\nof{Many other phenomena in nature can be described by an integro-differential equation with one or many internal coordinates. The Boltzmann transport equation has the molecule velocity as an internal coordinate. The transport equation applied to neutrons or its condensation into the diffusion equation for neutrons use the neutron energy as internal energy. Population balance problems use the particle, bubble or droplet size as internal coordinate. The least square method has been applied succesfully to population balance problems by cite{Dorao05a}.}
 
+%Many other phenomena in nature can be described by an integro-differential equation with one or many internal coordinates. The Boltzmann transport equation \newf{\cite{Chapman1970} }has the molecule velocity as an internal coordinate. The transport equation applied to neutrons \newf{\cite{Duderstad1976} }or its condensation into the diffusion equation for neutrons use the neutron energy\nof{as internal energy}. Population balance problems use \nof{the particle, bubble or droplet size}\newf{a property of the entities} as internal coordinate \newf{\cite{Ramkrishna2000}}. \nof{The least square method has been applied succesfully to population balance problems by cite{Dorao05a}.}\newf{Several numerical methods have been developed accordingly, most of which are thought to eliminate the integral terms from the equations.}
 
-\TODO{     * Introduce LSQ}
+\newf{Several numerical methods have been developed for solving integro--differential equations in other areas of science. Examples are the neutron transport equation \cite{Duderstad1976} and the population balance equation \cite{Ramkrishna2000}. Most of these methods are designed to eliminate the integral terms from the equations.}
+\newf{In recent years, the work by \cite{Dorao05a}, \cite{Patruno2010} and \cite{Sporleder2011} has shown the capability of the least-squares method (LSQ) to solve the integro-differential form of the equations directly. This spectral method is based on the idea that under certain conditions minimizing the residual of the equations defined with the numerical solution is equivalent to minimizing the error, i.e., the distance between the numerical solution and the exact solution \cite{Jiang1998}. This reformulation of the equations as a minimization problem is independent of the equations at hand, and therefore it allows for flexible and general--purpose programming. Besides, the method uses a measure of the residual as a built-in error estimator, and presents semi-analytical solutions, as the minimizing function is expanded in a family of basis functions. When combined with the finite or spectral element approach \cite{Gerritsma2010}, it is capable of solving large problems in arbitrary geometries, using unstructured meshes.}
 
+The scope of the present work \nof{does not allow us to address}\newf{leaves aside} how to find \nof{any of }the kernels of the MSTE \nof{nor any comparison}\newf{as well as possible comparisons} with experiments. \nof{We are interested in the study of the suitability of the LSQ method for the solution of the MSTE for porous media, and this will be achieved by the manufactured solution method. We will only focus here in the steady state case, in one dimension only.}\newf{Instead, we focus on the suitability of the LSQ to solve the MSTE. The analysis will make use of the manufactured solution method for a one-dimensional steady--state case. The extension to more complex problems is straight--forward.}
 
-The scope of the present work does not allow us to address how to find any of the kernels of the MSTE nor any comparison with experiments. We are interested in the study of the suitability of the LSQ method for the solution of the MSTE for porous media, and this will be achieved by the manufactured solution method. We will only focus here in the steady state case, in one dimension only.
-
-The objective of this paper is to propose and explain how to use LSQ for the solution of the multi-scale transport equation for porous media. The multi-scale transport, the solution method and a numerical example are given in the following three sections.
+The objective of this paper is to propose \nof{and explain how to use} \newf{the }LSQ for the solution of the \nof{multi-scale transport equation}\newf{MSTE} for porous media \newf{and explain its implementation}. The \nof{multi-scale transport}\newf{model}, the solution method and \nof{a}\newf{the} numerical example are given in the following three sections.
 
 \section{Model}
 
-The term pore-size have been used loosely in the literature and needs to be addressed first. \cite{Dullien} proposed to use twice the hydraulic radius as a convenient definition but others might work as well in the present approach since what we are after is a characteristic length that will represent the pore scale. Any of these choices requires a proper definition of a pore as a unity, for which any arbitrary definition of a portion of the void volume can chosen where a pore size can be measure (e.g. hydraulic radius) for each pore. Most pore networks agree on the definition of these elementary units. Each pore will therefore have a volume. In the MSTE, all the void volume is assigned to pores, and the concept of throat is not needed making a difference with some pore network strategies. Let's define $\xi$ as the pore size, and $\epsilon(\xi)$ the summed volume for all the pores of size $\xi$ per volume unit.
+The term \nof{pore-size have}\newf{pore size has} been used loosely in the literature and needs to be addressed first. \newf{In our framework, it is a characteristic length that represents the pore scale. }\cite{Dullien} proposed \nof{to use}\newf{to define the pore size as} twice the hydraulic radius\nof{as a convenient definition but others might work as well in the present approach since what we are after is a characteristic length that will represent the pore scale}. \nof{Any of these choices requires a proper definition of a pore as a unity, for which any arbitrary definition of a portion of the void volume can chosen where a pore size can be measure (e.g. hydraulic radius) for each pore.}\newf{Other definitions may be used. Regardless of the choice, a consitent definition of a pore as a unity is required.} Most pore networks agree on the definition of these elementary units. Each pore will therefore have a volume. In the MSTE, all the void volume is assigned to pores, and the concept of throat is not needed\newf{. This is different to} \nof{making a difference with }some pore network strategies. 
 
-On average, the permeability will be different for each pore size as well, $k(\xi)$. A driven force will produce an advective velocity of the fluid at the scale $\xi$ denoted as $v(\xi)$, and the discharge (or slip velocity) for the same scale is $q(\xi)=\epsilon(\xi) v(\xi)$.
+\Fede{Lo cambi\'e bastante porque no se entend\'ia, perd\'on. Si falta algo, ponga nom\'as...}
+\Fede{Qu\'e es throat? Pore networks? Capaz alguna ref? Y si estas diferencias con otros m\'etodos establecidos las ponemos en la intro?}
+
+\nof{Let's}\newf{Let us} define $\xi$ as the pore size, and $\epsilon(\xi)$ \newf{as the total volume of the pores} \nof{the summed volume for all the pores }of size $\xi$ per volume unit.
+\nof{On average, the permeability will be different for each pore size as well, $k(\xi)$. A driven force will produce an advective velocity of the fluid at the scale $\xi$ denoted as $v(\xi)$, and the discharge (or slip velocity) for the same scale is $q(\xi)=\epsilon(\xi) v(\xi)$.}
+\newf{We will indicate the permeability of a pore of size $\xi$ with $k(\xi)$, the advective velocity of the fluid at the scale $\xi$ as $v(\xi)$, and the discharge (or slip velocity) for the same scale as $q(\xi)=\epsilon(\xi) v(\xi)$}.
+
+\Fede{De nuevo cambio, pero me pareci\'o que la intenci\'on era definir variables. Igual, no est\'a muy claro. Se nota que no estoy en tema. Pero m\'as all\'a de eso, te puedo preguntar si $\epsilon$ y $q$ son distribuciones o no (hasta ahora no, m\'as adelante s\'i), y a $\phi$ nunca la introduc\'is tampoco (s\'e que es el tracer, pero exactamente c\'omo se define??).}
+\Fede{Capaz podr\'ias empezar definiendo $\phi$ y el problema f\'isico, poner la ecuaci\'on, describir los t\'erminos y las variables que aparecen claramente, y despu\'es las otras como $\epsilon$, que en la ecuaci\'on no figuran directamente... Te va as\'i? Esta secci\'on es cr\'itica, porque el modelo es muy muy poco conocido.}
+\Fede{Dejo de corregir la secci\'on. Me gustar\'ia de ser posible que ac\'a hagas una intro al modelo general, y el 1D introducirlo despu\'es, como simplificaci\'on... }
 
 \cite{DupuySchwarz} introduce the concept of the redistribution function $h(\xi_1 \rightarrow \xi_2)$ as the discharge from pores of size $\xi_1$ into pores of sizes $\xi_2$. This is a measure of the mixing between pores of different scales.
 
@@ -98,41 +123,45 @@ The left hand side and first term of the right hand side of the equation \ref{eq
 \TODO{    * Point out challenges for solving the equation}
 
 \section{The least-squares method}
-Let us write our system of equations as follows:
+The LSQ reformulates any given well-posed set of equations as a minimization problem. As the MSTE could be taken as part of a more complex model, we present the method in a general manner, for a non-linear set of equations. 
 
-\begin{eqnarray}
-\mathcal{L} \phi = \mathbf{g} \quad \mbox{in} \ \Omega \label{eq:Problem} \\
-\mathcal{B} \phi = \mathbf{f_\Gamma} \quad \mbox{on} \ \Gamma \label{eq:Boundary}
-\end{eqnarray}
+Let us write the problem to be solved as follows: 
 
+Find $\mathbf{f}\in X(\Omega)$ such that:
 \begin{eqnarray}
 \mathcal{L} \mathbf{f} = \mathbf{g} \quad \mbox{in} \ \Omega \label{eq:Problem} \\
 \mathcal{B} \mathbf{f} = \mathbf{f_\Gamma} \quad \mbox{on} \ \Gamma \label{eq:Boundary}
 \end{eqnarray}
 
-\noindent where $\Omega$ is the domain of the system, $\Gamma$ is the boundary of the domain, $\mathcal{L}$ is a functional operator, and $\mathcal{B}$ is the trace operator. Equation \ref{eq:Boundary} represents the equations of the boundary conditions, while  equation \ref{eq:Problem} represents the main equations of the problem. 
+\noindent where $\Omega$ is the domain of the system, $\Gamma$ is the boundary of the domain, $\mathcal{L}$ is a functional operator, and $\mathcal{B}$ is the trace operator. $\mathbf{f}$ is the approximating function, which in the ideal case coincides with the exact solution to the problem.
 
-In this manner, \Pablo{a} norm equivalent functional \Pablo{can} defined as follows:
+Equation \ref{eq:Boundary} represents the equations of the boundary conditions, while  equation \ref{eq:Problem} represents the main equations of the problem. 
+For example, taking equation \ref{eq:ss2} we find:
+
+\begin{eqnarray}
+\mathbf{f}&=&\phi_i \nonumber \\
+\mathbf{g}&=&S_i \label{eq:problem} \\
+\mathcal{L}\bullet&=& q \cdot \frac{\partial \bullet}{\partial z} - \int \bullet h(z, \hat \xi \rightarrow \xi) d\hat \xi +\bullet\int h(z, \hat \xi \rightarrow \xi) d\hat \xi \nonumber
+\end{eqnarray}
+
+\Pablo{A} norm equivalent functional \Pablo{can} defined as follows:
 
 \begin{eqnarray} 
 \mathcal{J}(\mathbf{f})\equiv  \frac{1}{2}\parallel \mathcal{L} \mathbf{f} -\mathbf{g} \parallel_{Y(\Omega)}^2 + \frac{1}{2} \parallel \mathcal{B}\mathbf{f} - \mathbf{f}_{\Gamma} \parallel_{Y(\Gamma)}^2. 
 \label{eq:WeakLSQ}
 \end{eqnarray}
 
+\Pablo{The functional $\mathcal{J}(\mathbf{f})$} is a measure of the residual of an aproximating function $\mathbf{f}\in X(\Omega)$. If the approximating function is the exact solution, the functional becomes zero.
+The residual of the boundary equations is included in equation \ref{eq:WeakLSQ} to allow a weak imposition of the boundary conditions. That is, we allow the use of spaces $X(\Omega)$ that are not constrained to satisfy these conditions. 
 
-\begin{eqnarray} 
-\mathcal{J}(\mathbf{\bullet})\equiv  \frac{1}{2}\parallel \mathcal{L} \bullet -\mathbf{g} \parallel_{Y(\Omega)}^2 + \frac{1}{2} \parallel \mathcal{B}\bullet - \mathbf{f}_{\Gamma} \parallel_{Y(\Gamma)}^2. 
-\label{eq:WeakLSQ3}
-\end{eqnarray}
+\Fede{Te saqu\'e un aporte, no te ofendas :-)}
 
-\Pablo{The functional $\mathcal{J}(\mathbf{f})$} is a measure of the residual of an aproximating function $\mathbf{f}\in X(\Omega)$.
-The residual of the boundary equations is included in equation \ref{eq:WeakLSQ} \Pablo{(second term of the RHS)} to allow a weak imposition of the boundary conditions. That is, we allow the use of spaces $X(\Omega)$ that are not constrained to satisfy these conditions.
-
-It is assumed that the problem is well-posed and that the operators $\mathcal{L}$ and $\mathcal{B}$ conform a continuous mapping of the function space $X(\Omega)\times X(\Gamma)$ on the space $Y(\Omega) \times Y(\Gamma)$ \Pablo{EEEEhh.... quien es Y?}. Under these conditions, a norm equivalence between the norm of the residual and the norm of the error is established. That is, finding a function $\mathbf{f}\in X(\Omega)$ that minimizes the functional $\mathcal{J}(\mathbf{f})$ is equivalent to finding the approximating function in $X(\Omega)$ which is closest to the exact solution to the problem.
+It is assumed that the problem is well-posed and that the operators $\mathcal{L}$ and $\mathcal{B}$ conform a continuous mapping of the function space $X(\Omega)\times X(\Gamma)$ on the space $Y(\Omega) \times Y(\Gamma)$. Under these conditions, a norm equivalence between the norm of the residual and the norm of the error is established. That is, finding a function $\mathbf{f}\in X(\Omega)$ that minimizes the functional $\mathcal{J}(\mathbf{f})$ is equivalent to finding the approximating function in $X(\Omega)$ which is closest to the exact solution to the problem. 
 
 \Pablo{Yo lo entiendo porque yo se LSQ (algo al menos)... pero no se como se explica mejor realmente... $\mathbf{f}$ es la solucion o es la aproximacion a la solucion? equacion 2 es inconsistente con el resto... o no? Es una muy poco feliz decision elegir el mismo symbolo para ambas, o no? Debido a que en nuestro problema la solucion es $\phi$ decidi hacer el cambio en la definicion del problema. Luego usamos $\mathbf{f}$ para la aprox solo.  Agregue un texto que capaz ayuda para aclarar ese punto.}
+\Fede{Yo tampoco s\'e c\'omo explicarlo mejor, jeje. Es lo m\'as simplificado que puedo hacerlo, sin mandar fruta for export y sin ir en contra de los fundamentos matem\'aticos. Hice cambios basados en tus comentarios, y creo que ahora queda mejor. Pero sig aceptando sugerencias. No tengo forma f\'acil de explicar el espacio Y. Est\'a definido impl\'icitamente en el problema, es el espacio im\'agen del mapeo que hace el operador. }
 
-Therefore, the least squares method is based on finding an $\mathbf{f} \in X(\Omega)$ such that this functional is minimized. 
+Therefore, the least squares method is based on finding an $\mathbf{f} \in X(\Omega)$ such that this functional is minimized. The reader is refered to \cite{Bochev2009} for more details on the mathematical formalism. 
 %
 %The spectral element method of the least squares type consists in sub-dividing the computational domain $\Omega$ into $N_e$ non--overlapping sub--domains $\Omega_e$, called spectral elements. We then look for the minimizing function within each spectral element $\mathbf{f}_P^e \in X_P(\Omega_e) \subset X(\Omega_e)$ such that:
 %
@@ -146,6 +175,7 @@ Therefore, the least squares method is based on finding an $\mathbf{f} \in X(\Om
 \subsection{Solution procedure}
 
 \Pablo{No he leido esta seccion todavia en mucho detalle. Pero parece estar bien. Si es la primera vez que se publica este tipo de informacion decime que agarro la lupa y la miro en mas detalle... se la podes dar a Hugo a ver si la entiende, jeje }
+\Fede{Hugo se duerme en estas secciones. Dice que ya lo conoce, despu\'es me viene a preguntar 3 veces por semana cosas que explico justamente en estas secciones... Tengo un paper aceptado que muestra esto en casi igual :-)}
 Using variational analysis, minimizing the functional $\mathcal{J}(\mathbf{f})$ is equivalent to finding $\mathbf{f} \in X(\Omega)$ such that:
 
 \begin{eqnarray}
@@ -274,33 +304,17 @@ L_{N_c1} & ... & L_{N_cv} & ... & L_{N_cN_v} \\
 
 Here, $\mathbf{r_q}$ is the quadrature point $q$.
 
-\section{Numerical examples}
-
-
-We select the case of flow through a column for our numerical example. A one metre column filled with a packed bed of rocks has a porosity per scale given by $\epsilon({\xi})$. Liquid is introduced from the top which percoles down the column at a given discharge per scale given by $q({\xi})$. The pore-scale redistribution, $h$  is assumed proportional to the discharges.
-
-In the manufacturing solution method we propose a solution $\phi(\xi, z)$ and calculate analitically the value of the source. For this problem the chosen values are:
-
-\begin{align}
-\epsilon(\xi)=&A (\xi-\xi_0) (-\xi+\xi_f) \\
-q({\xi}) =&V \epsilon(\xi) \xi^2\\
-h(\hat \xi, \xi, z) =& q(\hat \xi) q(\xi)/L\\
-\phi(\xi, z) =& 10 z (1-M Log({\xi}/R))\\
-\nonumber S(\xi, z)=& 10 A V {\xi}^2 ({\xi}-\xi_0) (-{\xi}+\xi_f) \left(1-M \text{Log}\left[\frac{{\xi}}{R}\right]\right) +\\
-\nonumber  &A^2 M V^2  (360 L)^{-1} {\xi}^2 ({\xi}-\xi_0) ({\xi}-\xi_f) z \times ... \\
-\nonumber  &\big(-81 \xi_0^5+175 \xi_0^4 \xi_f-175 \xi_0 \xi_f^4+  ...\\
-\nonumber &81 \xi_f^5+60 \xi_0^4 (3 \xi_0-5 \xi_f) \text{Log}\left[\frac{\xi_0}{{\xi}}\right]+ ...\\
-& 60 (5 \xi_0-3 \xi_f) \xi_f^4 \text{Log}\left[\frac{\xi_f}{{\xi}}\right]\big)
-\end{align}
-
-We rewrite the problem equation \ref{eq:ss2} as,
-
-\begin{eqnarray}
-q(z,\psi)\frac{\partial \phi(z,\xi)}{dz} +\phi(z,\xi)\int h(z,\xi\rightarrow\hat{\xi})d\hat{\xi} \nonumber \\
--\int \phi(z,\hat{\xi}) h(z,\xi\rightarrow\hat{\xi})d\hat{\xi} = S(z,\xi)
-\end{eqnarray}
-
-The equation is linear when solved for $\phi(z,\xi)$. Thus, $\frac{\partial \mathcal{E}}{\partial \phi}\bullet=\mathcal{L}\bullet=q(z,\psi)\frac{\partial \bullet}{dz} +\int h(z,\xi\rightarrow\hat{\xi})d\hat{\xi}\bullet -\int h(z,\xi\rightarrow\hat{\xi})\bullet d\hat{\xi}$. The equation presents a derivative, an identity and an integral operator applied to $\phi$. In matricial form:
+\section{Numerical example}
+%We rewrite the problem equation \ref{eq:ss2} as,
+%
+%\begin{eqnarray}
+%q(z,\psi)\frac{\partial \phi(z,\xi)}{dz} +\phi(z,\xi)\int h(z,\xi\rightarrow\hat{\xi})d\hat{\xi} \nonumber \\
+%-\int \phi(z,\hat{\xi}) h(z,\xi\rightarrow\hat{\xi})d\hat{\xi} = S(z,\xi)
+%\end{eqnarray}
+%
+%The equation is linear when solved for $\phi(z,\xi)$. Thus, $\frac{\partial \mathcal{E}}{\partial \phi}\bullet=\mathcal{L}\bullet=q(z,\psi)\frac{\partial \bullet}{dz} +\int h(z,\xi\rightarrow\hat{\xi})d\hat{\xi}\bullet -\int h(z,\xi\rightarrow\hat{\xi})\bullet d\hat{\xi}$. 
+As shown in equation \ref{eq:problem}, the MSTE is linear when solved for $\phi(z,\xi)$. 
+The equation presents a derivative, an identity and an integral operator applied to $\phi$. In matricial form:
 
 \begin{eqnarray}
 \mathbf{L}&=&\mathbf{C_1}\mathbf{Dz}+\mathbf{C_2}\mathbf{H} \Pablo{+} \mathbf{I_h} \\
@@ -334,19 +348,34 @@ $\mathbf{I_h}$ is the integral operator weighted with $h$, and is defined as fol
 
 \begin{eqnarray}
 \left[\mathbf{I_h}\right]_{qj}&=& \Pablo{-} \int h(z_q,\xi_q\rightarrow\hat{\xi})\varphi_j(z_q,\hat{\xi}) d\hat{\xi}\nonumber \\
-&=& \Pablo{-} \sum_k h(\xi_q\rightarrow s_k \rightarrow\xi_q)\varphi_j(z_q,s_k) \omega_k
+&=& \Pablo{-} \sum_k h(\xi_q\rightarrow s_k )\varphi_j(z_q,s_k) \omega_k
 \end{eqnarray}
 
-\Pablo{No hay que borrar el segundo $\xi$ dentro de h, del segundo renglon?}
+Here, we define new quadrature points and weights such that $s_k$ exists within the integration boundaries for each row of the integral operator matrix. 
 
-Here, we define new quadrature points and weights such that $s_k$ exists within the integration boundaries for each row of the integral operator matrix. For \Pablo{the present problem the integration limits are the domain limits.}
-
-\section{Results}
+\Fede{Si el problema a resolver ya se introdujo en la segunda secci\'on, entonces esto de ac\'a puede ir a la secci\'on de implementaci\'on :-)}
 
 
-\TODO{Mention implementation details (polynomials and quadratures used, number of points, solver, etc.).  ouch... GLL, 12 puntos como se ve en la figura} \Pablo{Ya esta, podemos quitar este TODO?}
+We select the case of flow through a column for our numerical example. A one meter column filled with a packed bed of rocks has a porosity per scale given by $\epsilon({\xi})$. Liquid is introduced from the top which percoles down the column at a given discharge per scale given by $q({\xi})$. The pore-scale redistribution, $h$  is assumed proportional to the discharges.
 
-\noindent Choosing the values $A=\tfrac{1}{500}$, $V=0.001$, $M=1$ and pore scale limits $\xi_0=1$ and $\xi_f=10$ mm. Gauss-Legendre-Lobato points where chosen for the external coordinate and Gauss-Legendre for the internal coordinate. \Pablo{revisa que tenga sentido esta oracion por favor...}
+In the manufacturing solution method we propose a solution $\phi(\xi, z)$ and calculate analitically the value of the source. For this problem the chosen values are:
+
+\begin{align}
+\epsilon(\xi)=&A (\xi-\xi_0) (-\xi+\xi_f) \\
+q({\xi}) =&V \epsilon(\xi) \xi^2\\
+h(\hat \xi, \xi, z) =& q(\hat \xi) q(\xi)/L\\
+\phi(\xi, z) =& 10 z (1-M Log({\xi}/R))\\
+\nonumber S(\xi, z)=& 10 A V {\xi}^2 ({\xi}-\xi_0) (-{\xi}+\xi_f) \left(1-M \text{Log}\left[\frac{{\xi}}{R}\right]\right) +\\
+\nonumber  &A^2 M V^2  (360 L)^{-1} {\xi}^2 ({\xi}-\xi_0) ({\xi}-\xi_f) z \times ... \\
+\nonumber  &\big(-81 \xi_0^5+175 \xi_0^4 \xi_f-175 \xi_0 \xi_f^4+  ...\\
+\nonumber &81 \xi_f^5+60 \xi_0^4 (3 \xi_0-5 \xi_f) \text{Log}\left[\frac{\xi_0}{{\xi}}\right]+ ...\\
+& 60 (5 \xi_0-3 \xi_f) \xi_f^4 \text{Log}\left[\frac{\xi_f}{{\xi}}\right]\big)
+\end{align}
+
+\noindent \newf{with $A=\tfrac{1}{500}$, $V=0.001$, $M=1$ and pore scale limits $\xi_0=1$ and $\xi_f=10$ mm.}
+
+\subsection{Results}
+The Gauss--Lobatto--Legendre quadrature rule was used to approximate the integrals in $z$, while the Gauss--Legendre quadratures were used for $\xi$. The solution was approximated using a nodal expansion based on Lagrange polynomials defined at the zeros of these quadratures. The problem was coded in {MATLAB}, and its direct solver was used for the calculations.
 
 %\TODO{Explain and show q, epsilon and h. and BCs}
 
@@ -367,6 +396,8 @@ The solution is shown in Figure \ref{fig:solution}. As the liquid flows down the
 %\TODO{Show and comment on convergence plot}
 Finally, the polynomial order for both dimensions was varied from 5 to 12 to verify if the numerical solution approximates to the proposed analytical solution. The infinity norm error is shown in the Figure \ref{fig:convergence} where it can be seen that the error is reduced exponentially with the method order up to computer precision.
 
+\TODO{Condition number y residual plots vs order}
+\Fede{Con el num de condici\'on se puede analizar el l\'im de accuracy, y con el residual se puede discutir las ventajas del m\'etodo (hp-adaptivity)}.
 
 \InsFig{convergence}{Convergence plot}{convergence}
 
@@ -375,12 +406,14 @@ Finally, the polynomial order for both dimensions was varied from 5 to 12 to ver
 The conclusions of this paper are:
 
 \begin{itemize}
-\item The least square high order method is well suited for the solution of the multi-scale transport equation for porous media achieving exponential convergence in the method order.
+\item The \nof{least square high order method}\newf{LSQ} is well suited for the solution of the multi-scale transport equation for porous media\newf{,} achieving exponential convergence in the method order.
 \item A method has been described and can now be applied for the solution of transport and reactions problems in porous media.
 \end{itemize}
 
 Future work still remains on the area of finding the most adequate kernels that best represent different porous media. Mainly empirical studies of the redistribution function need to be done.
-
+\Fede{Ahora me tengo que ir, pero hay que mejorar esta conclusi\'on}
+\TODO{Conclusiones en serio?}
+\TODO{Bibliograf\'ia!!}
 %\abstract{
 %  This file is an example \LaTeX file for submission to CFD2011.  A
 %  limit of 10 pages applies.

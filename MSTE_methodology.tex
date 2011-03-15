@@ -53,7 +53,7 @@
 \newpage
 
 \section{Introduction}
-\Fede{FEDE WAS HERE!!! Faltan algunas referencias, y tenemos que coordinarlas. Ponele, mi primer paper en CFD lo cito como Sporleder2010, pero creo que vos lo ten\'es como "sporleder" Intent\'e abrir el .bib con mi JabRef, pero me tir\'o error. Propongo indicar cambios que cada uno haga en las secciones en com\'un o secciones ajenas (si yo agrego una ecuaci\'on al explicar LSQ no indico nada, pero si lo hago en la intro s\'i, x ej.). Ah, y me sigue tirando errores de paquetes. A vos no? Tengo 13 errores y 33 bad boxes ahora :-D }
+%\Fede{FEDE WAS HERE!!! Faltan algunas referencias, y tenemos que coordinarlas. Ponele, mi primer paper en CFD lo cito como Sporleder2010, pero creo que vos lo ten\'es como "sporleder" Intent\'e abrir el .bib con mi JabRef, pero me tir\'o error. Propongo indicar cambios que cada uno haga en las secciones en com\'un o secciones ajenas (si yo agrego una ecuaci\'on al explicar LSQ no indico nada, pero si lo hago en la intro s\'i, x ej.). Ah, y me sigue tirando errores de paquetes. A vos no? Tengo 13 errores y 33 bad boxes ahora :-D }
 
 Theories for studying porous media were first formulated as early the end of the eighteen century after the volume fraction concept was introduced for describing mud. Half a century later one of the most basic law for saturated porous solids was established by Henry Darcy, i.e. the flow velocity of the liquid in a porous solid is proportional to the pressure gradient. Since then more complex theories for predicting the proportionality constant, incorporating the capillary force and considering deformable media with the definition of the consolidation problem \citep{Boer1992}. 
 
@@ -66,6 +66,7 @@ The multi-scale transport equation for porous media (MSTE) was proposed as an ex
 However, the incorporation of one internal coordinate to the transport equation introduces one extra dimension in complexity. Not only all the main variables, depend now on the pore scale, but the partial differential equation system is now an integro-partial differential equation system. This brings problems at the time of choosing the most suitable solution method. 
 
 Many other phenomena in nature can be described by an integro-differential equation with one or many internal coordinates. The Boltzmann transport equation has the molecule velocity as an internal coordinate. The transport equation applied to neutrons or its condensation into the diffusion equation for neutrons use the neutron energy as internal energy. Population balance problems use the particle, bubble or droplet size as internal coordinate. The least square method has been applied succesfully to population balance problems by \cite{Dorao05a}.
+
 
 \TODO{     * Introduce LSQ}
 
@@ -144,7 +145,7 @@ Therefore, the least squares method is based on finding an $\mathbf{f} \in X(\Om
 
 \subsection{Solution procedure}
 
-\TODO{No he leido esta seccion todavia}
+\Pablo{No he leido esta seccion todavia en mucho detalle. Pero parece estar bien. Si es la primera vez que se publica este tipo de informacion decime que agarro la lupa y la miro en mas detalle... se la podes dar a Hugo a ver si la entiende, jeje }
 Using variational analysis, minimizing the functional $\mathcal{J}(\mathbf{f})$ is equivalent to finding $\mathbf{f} \in X(\Omega)$ such that:
 
 \begin{eqnarray}
@@ -278,7 +279,7 @@ Here, $\mathbf{r_q}$ is the quadrature point $q$.
 
 We select the case of flow through a column for our numerical example. A one metre column filled with a packed bed of rocks has a porosity per scale given by $\epsilon({\xi})$. Liquid is introduced from the top which percoles down the column at a given discharge per scale given by $q({\xi})$. The pore-scale redistribution, $h$  is assumed proportional to the discharges.
 
-In the manufacturing solution method we propose a solution $\phi(\xi, z)$ and calculate analitically the value of the source. For this problem the values chosen are:
+In the manufacturing solution method we propose a solution $\phi(\xi, z)$ and calculate analitically the value of the source. For this problem the chosen values are:
 
 \begin{align}
 \epsilon(\xi)=&A (\xi-\xi_0) (-\xi+\xi_f) \\
@@ -342,19 +343,20 @@ Here, we define new quadrature points and weights such that $s_k$ exists within 
 
 \section{Results}
 
-\noindent Choosing the values A=, V=, M= and M= \TODO{no me acuerdo}.
 
-\TODO{Mention implementation details (polynomials and quadratures used, number of points, solver, etc.).  ouch... GLL, 12 puntos como se ve en la figura}
+\TODO{Mention implementation details (polynomials and quadratures used, number of points, solver, etc.).  ouch... GLL, 12 puntos como se ve en la figura} \Pablo{Ya esta, podemos quitar este TODO?}
+
+\noindent Choosing the values $A=\tfrac{1}{500}$, $V=0.001$, $M=1$ and pore scale limits $\xi_0=1$ and $\xi_f=10$ mm. Gauss-Legendre-Lobato points where chosen for the external coordinate and Gauss-Legendre for the internal coordinate. \Pablo{revisa que tenga sentido esta oracion por favor...}
 
 %\TODO{Explain and show q, epsilon and h. and BCs}
 
-Both the discharge, $q({\xi})$ and the porosity, $\epsilon({\xi})$ do not depend on the position along the column. Plot of the distribution and cummulative distribution for these two functions are given in Figure \ref{fig:profiles}.
+Both the discharge, $q({\xi})$ and the porosity, $\epsilon({\xi})$ do not depend on the position along the column. Plot of the distribution and cumulative distribution for these two functions are given in Figure \ref{fig:profiles}.
 
 \InsFig{profiles}{Left column: porosity distribution (top) and cumulative porosity distribution (bottom). Middle column: discharge distribution (top) and cumulative discharge distribution (bottom). Right column: velocity per channel (top), and 1-metre residence time (bottom)}{profiles}
 
 %\TODO{Describe what case could be described with this simplified model.}
 
-The solution is shown in Figure \ref{fig:solution}. As the liquid flows down the column $\phi$ increases due to reactions happening inside the pores. Despite the source term is very different for different pore sizes (negative for large pores and positive for small pores, see Figure \ref{fig:source}) the tracer $\phi$ is exchanged between different pores scales tending to level out the differences. However the increase is larger for the small pores at all the length of the column (z values). The source term (Figure \ref{fig:source}) behaves differently for different pore scales. Large amounts of $\phi$ are generated for pores smaller than 5 mm, while a sink is observed in the largest pores. This behaviour for the source term mimic two compiting reactions. It models the case of a specie that is a product of an heterogeneous reaction but is a reactant of a reaction taking place in the liquid bulk. Heterogeneous reactions depend strongly of the surface to volume ratio which is much larger for small pore scales. At the same time the reactant is consumed in the larger pores in this case as the bulk reaction that consumes $\phi$ becomes more dominant.
+The solution is shown in Figure \ref{fig:solution}. As the liquid flows down the column $\phi$ increases due to reactions happening inside the pores. Despite the source term is very different for different pore sizes (negative for large pores and positive for small pores, see Figure \ref{fig:source}) the tracer $\phi$ is exchanged between different pores scales tending to level out the differences. However the increase is larger for the small pores at all the length of the column (z values). The source term (Figure \ref{fig:source}) behaves differently for different pore scales. Large amounts of $\phi$ are generated for pores smaller than 5 mm, while a sink is observed in the largest pores. This behaviour for the source term mimic two competing reactions. It models the case of a specie that is a product of an heterogeneous reaction but is a reactant of a reaction taking place in the liquid bulk. Heterogeneous reactions depend strongly of the surface to volume ratio which is much larger for small pore scales. At the same time the reactant is consumed in the larger pores in this case as the bulk reaction that consumes $\phi$ becomes more dominant.
 
 \InsFig{solution}{Solution $\phi(z,\xi)$.}{solution}
 
@@ -362,7 +364,8 @@ The solution is shown in Figure \ref{fig:solution}. As the liquid flows down the
 
 %\TODO{Explain what is happening with phi and S in each scale, and the mixing by h.}
 
-\TODO{Show and comment on convergence plot}
+%\TODO{Show and comment on convergence plot}
+Finally, the polynomial order for both dimensions was varied from 5 to 12 to verify if the numerical solution approximates to the proposed analytical solution. The infinity norm error is shown in the Figure \ref{fig:convergence} where it can be seen that the error is reduced exponentially with the method order up to computer precision.
 
 
 \InsFig{convergence}{Convergence plot}{convergence}
@@ -372,7 +375,7 @@ The solution is shown in Figure \ref{fig:solution}. As the liquid flows down the
 The conclusions of this paper are:
 
 \begin{itemize}
-\item The least square high order method is well suited for the solution of the multi-scale transport equation for porous media achieving exponencial convergence in the method order.
+\item The least square high order method is well suited for the solution of the multi-scale transport equation for porous media achieving exponential convergence in the method order.
 \item A method has been described and can now be applied for the solution of transport and reactions problems in porous media.
 \end{itemize}
 

@@ -13,9 +13,9 @@
 		\nompageref{1}
   \item [{$\phi$}]\begingroup Concentration, $[\nicefrac{kg}{m^3}]$; $\phi(\xi) d\xi$ is the probability density function for the concentration, $[\nicefrac{m^3}{m^3}]$ \nomeqref {0}
 		\nompageref{1}
-  \item [{$\Omega$}]\begingroup Problem domain\nomeqref {0}
+  \item [{$\Omega$}]\begingroup Domain of the problem\nomeqref {0}
 		\nompageref{1}
-  \item [{$\Lambda$}]\begingroup Problem domain boundary where BC are applied \nomeqref {0}
+  \item [{$\Gamma$}]\begingroup Boundary of the problem domain \nomeqref {0}
 		\nompageref{1}
 
 %%%%%%%%%%%%%%%%%%%%%
@@ -37,27 +37,25 @@
 		\nompageref{1}
   \item [{$R $}]\begingroup Concentration definition arbitrary constant, $[m]$.\nomeqref {0}
 		\nompageref{1}
-  \item [{$S $}]\begingroup Model source term; $S(\xi)d\xi$ is the source distribution per scale $[\nicefrac{kg}{m^3}]$.\nomeqref {0}
+  \item [{$S $}]\begingroup Model source term; $S(\xi)d\xi$ is the source distribution per scale, $[\nicefrac{kg}{m^3}]$.\nomeqref {0}
 		\nompageref{1}
-  \item [{$X$}]\begingroup , $[]$.\nomeqref {0}\nompageref{1}
-  \item [{$Y$}]\begingroup , $[]$.\nomeqref {0}\nompageref{1}
-  \item [{$\mathbf A$}]\begingroup , $[]$.\nomeqref {0}\nompageref{1}
-  \item [{$\mathbf w$}]\begingroup , $[]$.\nomeqref {0}\nompageref{1}
-  \item [{$\mathbf f$}]\begingroup , $[]$.\nomeqref {0}\nompageref{1}
-  \item [{$\mathbf F$}]\begingroup , $[]$.\nomeqref {0}\nompageref{1}
-  \item [{$\mathbf L$}]\begingroup , $[]$.\nomeqref {0}\nompageref{1}
-  \item [{$\mathbf W$}]\begingroup , $[]$.\nomeqref {0}\nompageref{1}
-  \item [{$\mathbf G$}]\begingroup , $[]$.\nomeqref {0}\nompageref{1}
-  \item [{$\mathbf b$}]\begingroup , $[]$.\nomeqref {0}\nompageref{1}
-  \item [{$\mathbf D$}]\begingroup , $[]$.\nomeqref {0}\nompageref{1}
-  \item [{$\mathbf H$}]\begingroup , $[]$.\nomeqref {0}\nompageref{1}
-  \item [{$\mathbf I$}]\begingroup , $[]$.\nomeqref {0}\nompageref{1}
-  \item [{$\mathcal A$}]\begingroup , $[]$.\nomeqref {0}\nompageref{1}
-  \item [{$\mathcal B$}]\begingroup , $[]$.\nomeqref {0}\nompageref{1}
-  \item [{$\mathcal E$}]\begingroup , $[]$.\nomeqref {0}\nompageref{1}
-  \item [{$\mathcal F$}]\begingroup REVISA SI PODES LA CALIGRAFIA DE LA F DE LA EQUACION 13, $[]$.\nomeqref {0}\nompageref{1}
-  \item [{$\mathcal J$}]\begingroup , $[]$.\nomeqref {0}\nompageref{1}
-  \item [{$\mathcal L$}]\begingroup , $[]$.\nomeqref {0}\nompageref{1}
+  \item [{$X$}]\begingroup Solution functional space.\nomeqref {0}\nompageref{1}
+  \item [{$Y$}]\begingroup Residual functional space.\nomeqref {0}\nompageref{1}
+  \item [{$\mathbf A$}]\begingroup Matrix of the discrete problem.\nomeqref {0}\nompageref{1}
+  \item [{$\mathbf w$}]\begingroup Generic function.\nomeqref {0}\nompageref{1}
+  \item [{$\mathbf f$}]\begingroup Generic solution.\nomeqref {0}\nompageref{1}
+  \item [{$\mathbf F$}]\begingroup Source vector for discrete problem.\nomeqref {0}\nompageref{1}
+  \item [{$\mathbf L$}]\begingroup Operator matrix.\nomeqref {0}\nompageref{1}
+  \item [{$\mathbf W$}]\begingroup Weight matrix.\nomeqref {0}\nompageref{1}
+  \item [{$\mathbf G$}]\begingroup Source vector.\nomeqref {0}\nompageref{1}
+  \item [{$\mathbf b$}]\begingroup Solution vector for discrete problem.\nomeqref {0}\nompageref{1}
+  \item [{$\mathbf D$}]\begingroup Derivative operator matrix.\nomeqref {0}\nompageref{1}
+  \item [{$\mathbf H$}]\begingroup Identity operator matrix.\nomeqref {0}\nompageref{1}
+  \item [{$\mathbf I$}]\begingroup Integral operator matrix.\nomeqref {0}\nompageref{1}
+  \item [{$\mathcal B$}]\begingroup Trace operator.\nomeqref {0}\nompageref{1}
+  \item [{$\mathcal E$}]\begingroup Equation.\nomeqref {0}\nompageref{1}
+  \item [{$\mathcal J$}]\begingroup Norm-equivalent functional.\nomeqref {0}\nompageref{1}
+  \item [{$\mathcal L$}]\begingroup Problem operator.\nomeqref {0}\nompageref{1}
 
 
 

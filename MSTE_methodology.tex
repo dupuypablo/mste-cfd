@@ -124,6 +124,7 @@ The left hand side and first term of the right hand side of the equation \ref{eq
 %\TODO{    * Point out challenges for solving the equation}
 
 \section{The least-squares method}
+\label{sec:LSQ}
 The LSQ reformulates any given well-posed set of equations as a minimization problem. As the MSTE could be taken as part of a more complex model, we present the method in a general manner, for a non-linear set of equations. 
 
 Let us write the problem to be solved as follows: 
@@ -237,7 +238,7 @@ For linear problems, $\frac{\partial\mathcal{E}}{\partial \mathbf{f}}\mathbf{w}=
 
 \begin{eqnarray}
 \mathcal{A}(\mathbf{f},\mathbf{w})= \langle \mathcal{L}\mathbf{f},\mathcal{L}\mathbf{w} \rangle \nonumber \\ 
-F(\mathbf{w})= \langle \mathbf{g},\mathcal{L}\mathbf{w} \rangle 
+\mathcal{F}(\mathbf{w})= \langle \mathbf{g},\mathcal{L}\mathbf{w} \rangle 
 \label{eq:equivLinear}
 \end{eqnarray}
 
@@ -259,7 +260,7 @@ The equivalent problem to be solved is to find $\mathbf{f_P} \in X_P(\Omega)$ su
 
 \begin{eqnarray}
 \mathcal{A}(\mathbf{f},\mathbf{w})= \big\langle \frac{\partial \mathcal{E}}{\partial \mathbf{f}}^*\mathbf{f} ,  \frac{\partial \mathcal{E}}{\partial \mathbf{f}}^*\mathbf{w} \big\rangle \nonumber \\
-F(\mathbf{w})= \big\langle \frac{\partial \mathcal{E}}{\partial \mathbf{f}}^*\mathbf{f^*}-\mathcal{E}(\mathbf{f^*}) , \frac{\partial \mathcal{E}}{\partial \mathbf{f}}^*\mathbf{w} \big\rangle 
+\mathcal{F}(\mathbf{w})= \big\langle \frac{\partial \mathcal{E}}{\partial \mathbf{f}}^*\mathbf{f^*}-\mathcal{E}(\mathbf{f^*}) , \frac{\partial \mathcal{E}}{\partial \mathbf{f}}^*\mathbf{w} \big\rangle 
 \label{eq:equivNR}
 \end{eqnarray}
 
@@ -395,12 +396,16 @@ The solution is shown in Figure \ref{fig:solution}. As the liquid flows down the
 %\TODO{Explain what is happening with phi and S in each scale, and the mixing by h.}
 
 %\TODO{Show and comment on convergence plot}
-Finally, the polynomial order for both dimensions was varied from 5 to 12 to verify if the numerical solution approximates to the proposed analytical solution. The infinity norm error is shown in the Figure \ref{fig:convergence} where it can be seen that the error is reduced exponentially with the method order up to computer precision.
+%Finally, the polynomial order for both dimensions was varied from 5 to 12 to verify if the numerical solution approximates to the proposed analytical solution. The infinity norm error is shown in the Figure \ref{fig:convergence} where it can be seen that the error is reduced exponentially with the method order up to computer precision. 
+Finally, the polynomial order for both dimensions was varied from 5 to 12 to analyze the accuracy of the numerical solution. Figure \ref{fig:convergence} shows the $L^2$ norm of the error. It can be seen that the error is reduced with an exponential convergence rate. This follows the behavior of the norm of the residual, due to the norm equivalence mentioned when presenting the LSQ. The norm of the residual, shown in Figure \ref{fig:res}, decreases until reaching a point of limiting accuracy, close to numerical precision. The existance of norm equivalence provides the numerical method with a built-in error estimator. In finite and spectral element versions of the method, the norm of the residual can be used to design hp-adaptivity strategies that optimize the grid used.
 
-\TODO{Condition number y residual plots vs order}
-\Fede{Con el num de condici\'on se puede analizar el l\'im de accuracy, y con el residual se puede discutir las ventajas del m\'etodo (hp-adaptivity)}.
 
-\InsFig{convergence}{Convergence plot}{convergence}
+\InsFig{convergence}{$L^2$ norm of the error vs. order of the approximation}{convergence}
+\InsFig{res}{$L^2$ norm of the residual vs. order of the approximation}{res}
+
+For completeness, the condition number versus the order of the approximation is shown in Figure \ref{fig:cond}. This number increases steeply with the order, reaching values over $10^12$. The condition number depends mostly on the fill-up of the matrix. The use of an element approach will reduce drastically this number. Larger models that use the MSTE are also expected to have lower condition numbers.
+
+\InsFig{cond}{Condition number vs. order of the approximation}{cond}
 
 \section{Conclusion}
 

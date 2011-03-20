@@ -1,7 +1,7 @@
 \documentclass{CFD2011}
 \usepackage{CFD2011}
 
-\usepackage[normalem]{ulem}
+%\usepackage[normalem]{ulem}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %This template is created for complying with the author instructions for the 
 %8th International Conference on CFD in Oil & Gas, Metallurgical and Process Industries
@@ -46,7 +46,8 @@
 \newcommand{\Fede}[1]{\textcolor{green}{Fede: #1} \\}
 \newcommand{\Pablo}[1]{\textcolor{blue}{#1}}
 \newcommand{\newf}[1]{\textcolor{green}{#1}}
-\newcommand{\nof}[1]{\textcolor{cyan}{{\sout{#1}}}}
+\newcommand{\nof}[1]{\textcolor{cyan}{}}
+%\newcommand{\nof}[1]{\textcolor{cyan}{{\sout{#1}}}}
 
 \begin{document}
 \maketitle  %create the title page
@@ -72,11 +73,11 @@
 \section{Introduction}
 Theories for studying porous media were first formulated as early \newf{as }the end of the eighteen century\newf{,} after the volume fraction concept was introduced for describing mud. Half a century later\newf{,} one of the most basic law\newf{s} for saturated porous solids was established by Henry Darcy, i.e. the flow velocity of the liquid in a porous solid is proportional to the pressure gradient. Since then\newf{, increasingly} more complex theories for predicting the proportionality constant \newf{have arised}, incorporating the capillary force and considering deformable media with the definition of the consolidation problem \citep{Boer1992}. 
 
-Studies on the water-soil characteristic curve \citep{durner1994}, experimental characterization techniques such as gas adsorption or mercury porosimetry \citep{Navas,Jaroniec1997,Abell1999}\nof{(nitrogen adsorption and mercury)}\newf{,} and the popularization of pore networks \citep{zhang1994, held2001, blunt2002, piri2005, ahrenholz2008, sholokhova2009} have \nof{solidify}\newf{consolidated} the concept of coexisting \nof{different-size }pores\nof{, better represented as the} \newf{of different sizes, which can be better represented with a} pore size distribution, e.g. see \cite{dullien1991}.
+Studies on the water-soil characteristic curve \citep{durner1994}, experimental characterization techniques such as gas adsorption or mercury porosimetry \citep{Navas,Jaroniec1997,Abell1999}\nof{(nitrogen adsorption and mercury)}\newf{,} and the popularization of pore networks \citep{zhang1994, held2001, oren2002, blunt2002, piri2005, ahrenholz2008, sholokhova2009} have \nof{solidify}\newf{consolidated} the concept of coexisting \nof{different-size }pores\nof{, better represented as the} \newf{of different sizes, which can be better represented with a} pore size distribution, e.g. see \cite{dullien1991}.
 
 Indeed, there are many different phenomena that will be affected by the pore size, as for example the physical principles of any of the experimental methods mentioned before. At the same time, heterogeneous reactions and the pore hydraulic resistivity are expected to depend strongly with the pore size. Therefore there is a clear need for adopting models that are able to capture and use the information on the pore size distribution in an efficient way.
 
-The multi-scale transport equation for porous media (MSTE) was proposed as an extension of approaches considering a finite number of groups as studied for example by \cite{Chen1989}, \cite{bouffard2001}. \cite{DupuySchwarz} introduced one internal coordinate to the continuity problem for accounting the multi scale transport of species and the scale-dependent physics. Furthermore, the MSTE defines a inter-pore redistribution function $h$ that makes the equation open and requires further research to find the most adequate closure or model.
+The multi-scale transport equation for porous media (MSTE) was proposed as an extension of approaches considering a finite number of groups as studied for example by \cite{Chen1989}, \cite{bouffard2001}. One internal coordinate was recently introduced \citep{DupuySchwarz} to the continuity problem for accounting the multi-scale transport of species and the scale-dependent physics. Furthermore, the MSTE defines a inter-pore redistribution function $h$ that makes the equation open and requires further research to find the most adequate closure or model.
 
 However, the incorporation of one internal coordinate to the transport equation introduces one extra dimension in complexity. Not only all the main variables\nof{,} depend now on the pore scale, but \newf{also }the partial differential equation system \nof{is now}\newf{becomes} an integro-partial differential equation system. This brings problems at the time of choosing the most suitable solution method. 
 
@@ -93,7 +94,7 @@ The objective of this paper is to propose \nof{and explain how to use} \newf{the
 
 \section{Model}
 
-The term \nof{pore-size have}\newf{pore size has} been used loosely in the literature and needs to be addressed first. \newf{In our framework, it is a characteristic length that represents the pore scale. }\cite{Dullien} proposed \nof{to use}\newf{to define the pore size as} twice the hydraulic radius\nof{as a convenient definition but others might work as well in the present approach since what we are after is a characteristic length that will represent the pore scale}. \nof{Any of these choices requires a proper definition of a pore as a unity, for which any arbitrary definition of a portion of the void volume can chosen where a pore size can be measure (e.g. hydraulic radius) for each pore.}\newf{Other definitions may be used. Regardless of the choice, a consitent definition of a pore as a unity is required.} Most pore networks agree on the definition of these elementary units. Each pore will therefore have a volume. In the MSTE, all the void volume is assigned to pores, and the concept of throat is not needed\newf{. This is different to} \nof{making a difference with }some pore network strategies. 
+The term \nof{pore-size have}\newf{pore size has} been used loosely in the literature and needs to be addressed first. \newf{In our framework, it is a characteristic length that represents the pore scale. }\cite{Dullien} proposed \nof{to use}\newf{to define the pore size as} twice the hydraulic radius\nof{as a convenient definition but others might work as well in the present approach since what we are after is a characteristic length that will represent the pore scale}. \nof{Any of these choices requires a proper definition of a pore as a unity, for which any arbitrary definition of a portion of the void volume can chosen where a pore size can be measure (e.g. hydraulic radius) for each pore.}\newf{Other definitions may be used. Regardless of the choice, a consitent definition of a pore as a unity is required.} Most pore networks agree on the definition of these elementary units. Each pore will therefore have a volume. In the MSTE, all the void volume is assigned to pores, and the concept of throat \citep{oren2002, blunt2002, piri2005} is not needed\newf{. This is different to} \nof{making a difference with }some pore network strategies. 
 
 \Fede{Lo cambi\'e bastante porque no se entend\'ia, perd\'on. Si falta algo, ponga nom\'as...}
 \Fede{Qu\'e es throat? Pore networks? Capaz alguna ref? Y si estas diferencias con otros m\'etodos establecidos las ponemos en la intro?}
@@ -120,7 +121,7 @@ q(z, \xi) \cdot \frac{\partial \phi_{i}(z, \xi)}{\partial z}  =
 
 The left hand side and first term of the right hand side of the equation \ref{eq:ss2} are the convection per scale and the source per scale and present no major interaction between scales. However, the integral on the right hand side couples different scales and makes impossible to solve the problem for each scale independently. It should be pointed out that advection can be happening at different speeds ($\tfrac{\partial q}{\partial \xi} \neq 0$) and the source term can also be written independently for each pore-size.
 
-\TODO{    * Point out challenges for solving the equation}
+%\TODO{    * Point out challenges for solving the equation}
 
 \section{The least-squares method}
 The LSQ reformulates any given well-posed set of equations as a minimization problem. As the MSTE could be taken as part of a more complex model, we present the method in a general manner, for a non-linear set of equations. 
@@ -409,6 +410,8 @@ The conclusions of this paper are:
 \item The \nof{least square high order method}\newf{LSQ} is well suited for the solution of the multi-scale transport equation for porous media\newf{,} achieving exponential convergence in the method order.
 \item A method has been described and can now be applied for the solution of transport and reactions problems in porous media.
 \end{itemize}
+
+The combination of the MSTE with LSQ enables a set of new physics that now can be modelled. We have shown how the specific discharge, and therefore, the advecting velocity can be different at different scales, having travelling times between the smallest and the largest pore scales that vary two order of mangitude. The cumulative distribution function of any variable, such as the tracer concentration can be recovered at any point of the domain. Furthermore, having a source term that works as sink and as source depending on the pore scale is also possible enabling the modelling of the competition between heterogeneous rections and reactions occuring in the liquid bulk. Finally, the incorporation of a redistribution tems add the complexity of an integral term that binds physics happening at different scale loosing the locality behavior proper of a normal transport equation and still this can be fully captured by the LSQ also with exponential convergency.
 
 Future work still remains on the area of finding the most adequate kernels that best represent different porous media. Mainly empirical studies of the redistribution function need to be done.
 \Fede{Ahora me tengo que ir, pero hay que mejorar esta conclusi\'on}

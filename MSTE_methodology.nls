@@ -1,0 +1,83 @@
+%Nomenclature for the CFD2011 paper template
+
+\begin{thenomenclature} 
+
+%%%%%%%%%%%%%%%%%%%%%
+%Greek symbols
+%%%%%%%%%%%%%%%%%%%%%
+ \nomgroup{G}
+
+  \item [{$\xi$}]\begingroup Pore scale size, $[m]$\nomeqref {0}
+		\nompageref{1}
+  \item [{$\epsilon$}]\begingroup Porosity, $[\nicefrac{m^3}{m^3}]$; $\epsilon(\xi) d\xi$ is the probability density function for the porosity, $[\nicefrac{m^3}{m^3}]$ \nomeqref {0}
+		\nompageref{1}
+  \item [{$\phi$}]\begingroup Concentration, $[\nicefrac{kg}{m^3}]$; $\phi(\xi) d\xi$ is the probability density function for the concentration, $[\nicefrac{m^3}{m^3}]$ \nomeqref {0}
+		\nompageref{1}
+  \item [{$\Omega$}]\begingroup Problem domain\nomeqref {0}
+		\nompageref{1}
+  \item [{$\Lambda$}]\begingroup Problem domain boundary where BC are applied \nomeqref {0}
+		\nompageref{1}
+
+%%%%%%%%%%%%%%%%%%%%%
+%Roman symbols
+%%%%%%%%%%%%%%%%%%%%%
+ \nomgroup{L}
+
+  \item [{$q $}]\begingroup Discharge or superficial velocity, $[\nicefrac{m}{s}]$; $q(\xi)d\xi $ is the probability density function for the discharge, $[\nicefrac{m}{s}]$.\nomeqref {0}
+		\nompageref{1}.
+  \item [{h}]\begingroup Inter-pore-scale redistribution; $h(\xi_1,\xi_2)d\xi_1 d\xi_2$ is the double probability density function for the inter-scale discharge, $[\nicefrac{1}{s}]$.\nomeqref {0}
+		\nompageref{1}
+  \item [{$A $}]\begingroup Porosity definition arbitrary constant, $[\nicefrac{1}{m^3}]$.\nomeqref {0}
+		\nompageref{1}
+  \item [{$V $}]\begingroup Discharge definition arbitrary constant, $[\nicefrac{1}{m s}]$.\nomeqref {0}
+		\nompageref{1}
+  \item [{$L $}]\begingroup Redistribution definition arbitrary constant, $[m]$.\nomeqref {0}
+		\nompageref{1}
+  \item [{$M $}]\begingroup Concentration definition arbitrary constant, $[1]$.\nomeqref {0}
+		\nompageref{1}
+  \item [{$R $}]\begingroup Concentration definition arbitrary constant, $[m]$.\nomeqref {0}
+		\nompageref{1}
+  \item [{$S $}]\begingroup Model source term; $S(\xi)d\xi$ is the source distribution per scale $[\nicefrac{kg}{m^3}]$.\nomeqref {0}
+		\nompageref{1}
+  \item [{$X$}]\begingroup , $[]$.\nomeqref {0}\nompageref{1}
+  \item [{$Y$}]\begingroup , $[]$.\nomeqref {0}\nompageref{1}
+  \item [{$\mathbf A$}]\begingroup , $[]$.\nomeqref {0}\nompageref{1}
+  \item [{$\mathbf w$}]\begingroup , $[]$.\nomeqref {0}\nompageref{1}
+  \item [{$\mathbf f$}]\begingroup , $[]$.\nomeqref {0}\nompageref{1}
+  \item [{$\mathbf F$}]\begingroup , $[]$.\nomeqref {0}\nompageref{1}
+  \item [{$\mathbf L$}]\begingroup , $[]$.\nomeqref {0}\nompageref{1}
+  \item [{$\mathbf W$}]\begingroup , $[]$.\nomeqref {0}\nompageref{1}
+  \item [{$\mathbf G$}]\begingroup , $[]$.\nomeqref {0}\nompageref{1}
+  \item [{$\mathbf b$}]\begingroup , $[]$.\nomeqref {0}\nompageref{1}
+  \item [{$\mathbf D$}]\begingroup , $[]$.\nomeqref {0}\nompageref{1}
+  \item [{$\mathbf H$}]\begingroup , $[]$.\nomeqref {0}\nompageref{1}
+  \item [{$\mathbf I$}]\begingroup , $[]$.\nomeqref {0}\nompageref{1}
+  \item [{$\mathcal A$}]\begingroup , $[]$.\nomeqref {0}\nompageref{1}
+  \item [{$\mathcal B$}]\begingroup , $[]$.\nomeqref {0}\nompageref{1}
+  \item [{$\mathcal E$}]\begingroup , $[]$.\nomeqref {0}\nompageref{1}
+  \item [{$\mathcal F$}]\begingroup REVISA SI PODES LA CALIGRAFIA DE LA F DE LA EQUACION 13, $[]$.\nomeqref {0}\nompageref{1}
+  \item [{$\mathcal J$}]\begingroup , $[]$.\nomeqref {0}\nompageref{1}
+  \item [{$\mathcal L$}]\begingroup , $[]$.\nomeqref {0}\nompageref{1}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%
+%subscripts
+%%%%%%%%%%%%%%%%%%%%%
+ \nomgroup{S}
+
+  \item [{$f$}]\begingroup Upper domain limit.\nomeqref {0}
+		\nompageref{1}
+  \item [{$0$}]\begingroup Lower domain limit.\nomeqref {0}
+		\nompageref{1}
+  \item [{$h$}]\begingroup Index $i$.\nomeqref {0}
+		\nompageref{1}
+  \item [{$k$}]\begingroup Index $j$.\nomeqref {0}
+		\nompageref{1}
+  \item [{$q$}]\begingroup Index $j$.\nomeqref {0}
+		\nompageref{1}
+  \item [{$j$}]\begingroup Index $j$.\nomeqref {0}
+		\nompageref{1}
+
+\end{thenomenclature}

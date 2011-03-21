@@ -1,10 +1,11 @@
 %!PS-Adobe-2.0 EPSF-1.2
 %%Creator: MATLAB, The Mathworks, Inc. Version 7.10.0.499 (R2010a). Operating System: Microsoft Windows XP.
 %%Title: C:\Documents and Settings\dup016\My Documents\new\cfdsintef\mste-cfd\cond.eps
-%%CreationDate: 03/21/2011  09:58:19
+%%CreationDate: 03/21/2011  12:26:15
 %%DocumentNeededFonts: Helvetica
 %%+ Times-Roman
 %%DocumentProcessColors: Cyan Magenta Yellow Black
+%%Extensions: CMYK
 %%Pages: 1
 %%BoundingBox:    57   196   551   592
 %%EndComments
@@ -144,12 +145,14 @@ ISOLatin1Encoding WindowsLatin1Encoding copy pop
   smat stri tri_to_matrix tmat2 concatmatrix } bdef
 /ds {stri astore pop} bdef
 /dt {dtri astore pop} bdef
-/db {2 copy /cols xdef /rows xdef mul dup string
+/db {2 copy /cols xdef /rows xdef mul dup 3 mul string
   currentfile exch readhexstring pop
-  /bmap xdef pop pop} bdef
+  dup 0 3 index getinterval /rbmap xdef
+  dup 2 index dup getinterval /gbmap xdef
+  1 index dup 2 mul exch getinterval /bbmap xdef pop pop}bdef
 /it {gs np dtri aload pop moveto lineto lineto cp c
   cols rows 8 compute_transform 
-  {bmap} image gr}bdef
+  rbmap gbmap bbmap true 3 colorimage gr}bdef
 /il {newpath moveto lineto stroke}bdef
 currentdict end def
 %%EndProlog
@@ -2577,11 +2580,15 @@ SO
  899 4616 mt  899  389 L
 gs 899 389 5363 4228 MR c np
 24 w
+/c8 { 0.000000 0.000000 1.000000 sr} bdef
+c8
 81 -171 86 -187 93 -194 102 -216 110 -230 123 -269 137 -298 156 -363 
 179 -417 213 -535 259 -636 2513 4178 12 MP stroke
 gr
 
 24 w
+c8
+0 sg
 %%IncludeResource: font CMR10
 /CMR10 /WindowsLatin1Encoding 120 FMSR
 
@@ -2675,8 +2682,8 @@ gr
 %%IncludeResource: font Times-Roman
 /Times-Roman /WindowsLatin1Encoding 120 FMSR
 
-3087 4934 mt 
-(approximation order) s
+3071 4934 mt 
+(Approximation order) s
 6 w
 
 end %%Color Dict

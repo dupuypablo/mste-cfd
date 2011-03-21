@@ -11,7 +11,7 @@
 		\nompageref{1}
   \item [{$\epsilon$}]\begingroup Porosity, $[\nicefrac{m^3}{m^3}]$; $\epsilon(\xi) d\xi$ is the probability density function for the porosity, $[\nicefrac{m^3}{m^3}]$ \nomeqref {0}
 		\nompageref{1}
-  \item [{$\phi$}]\begingroup Concentration, $[\nicefrac{kg}{m^3}]$; $\phi(\xi) d\xi$ is the probability density function for the concentration, $[\nicefrac{m^3}{m^3}]$ \nomeqref {0}
+  \item [{$\phi$}]\begingroup Concentration, $[\nicefrac{mol}{m^3}]$; $\phi(\xi) d\xi$ is the probability density function for the concentration, $[\nicefrac{m^3}{m^3}]$ \nomeqref {0}
 		\nompageref{1}
   \item [{$\Omega$}]\begingroup Domain of the problem\nomeqref {0}
 		\nompageref{1}
@@ -37,7 +37,7 @@
 		\nompageref{1}
   \item [{$R $}]\begingroup Concentration definition arbitrary constant, $[m]$.\nomeqref {0}
 		\nompageref{1}
-  \item [{$S $}]\begingroup Model source term; $S(\xi)d\xi$ is the source distribution per scale, $[\nicefrac{kg}{m^3}]$.\nomeqref {0}
+  \item [{$S $}]\begingroup Model source term; $S(\xi)d\xi$ is the source distribution per scale, $[\nicefrac{mol}{s m^3}]$.\nomeqref {0}
 		\nompageref{1}
   \item [{$X$}]\begingroup Solution functional space.\nomeqref {0}\nompageref{1}
   \item [{$Y$}]\begingroup Residual functional space.\nomeqref {0}\nompageref{1}
@@ -69,11 +69,11 @@
 		\nompageref{1}
   \item [{$0$}]\begingroup Lower domain limit.\nomeqref {0}
 		\nompageref{1}
-  \item [{$h$}]\begingroup Index $i$.\nomeqref {0}
+  \item [{$h$}]\begingroup Index $h$.\nomeqref {0}
 		\nompageref{1}
-  \item [{$k$}]\begingroup Index $j$.\nomeqref {0}
+  \item [{$k$}]\begingroup Index $k$.\nomeqref {0}
 		\nompageref{1}
-  \item [{$q$}]\begingroup Index $j$.\nomeqref {0}
+  \item [{$q$}]\begingroup Index $q$.\nomeqref {0}
 		\nompageref{1}
   \item [{$j$}]\begingroup Index $j$.\nomeqref {0}
 		\nompageref{1}

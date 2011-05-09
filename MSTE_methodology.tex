@@ -94,10 +94,10 @@ The objective of this paper is to propose \nof{and explain how to use} \newf{the
 
 \section{Model}
 
-Traditionally, the transport of a given specie with concentration $\phi$ convected by plug flow through a porous media without diffusion in one dimension (z) can be written as:
+Traditionally, the transport of a given species with concentration $\phi$ convected by plug flow through a porous media without diffusion in one dimension (z) can be written as:
 
 \begin{equation}
-\epsilon v \frac{\phi(z)}{\partial z}=S(z)
+\epsilon v \frac{\partial \phi(z)}{\partial z}=S(z)
 \end{equation}
 
 \noindent where $v$ is the advective velocity, $\epsilon$ is the void (or fluid) porosity and the right hand side is a source term. However, this approach is not able to capture all the degrees of freedom present in real porous media and the two-porosity model has been a successful first extension towards a more scale-size-related approach. Recently, a multi-scale approach has been introduced as a generalization to this concept based on the pore scale \cite{DupuySchwarz}.
@@ -123,11 +123,13 @@ The $\epsilon(\xi)d\xi$ and $q(\xi)d\xi$ are the probability density functions f
 The multi-scale transport for a tracer in all the pores assuming one dimension ($z$) and steady state case can be written as \citep{DupuySchwarz}:
 
 \begin{align}
-q(z, \xi) \cdot \frac{\partial \phi(z, \xi)}{\partial z}  = 
- S(z, \xi) + \int [\phi(z, \hat \xi) - \phi(z, \xi)] h(z, \hat \xi \rightarrow \xi) d\hat \xi . 
+\nonumber q(z, \xi) \cdot \frac{\partial \phi(z, \xi)}{\partial z}  &= S(z, \xi)   +
+ \int [\phi(z, \hat \xi) - \phi(z, \xi)] h(z, \hat \xi \rightarrow \xi) d\hat \xi\\
+\phi(z=z_{\Gamma},\xi)&=\phi_{\Gamma}(\xi).
 \label{eq:ss2}
 \end{align}
 
+With $\phi_{\Gamma}(\xi)$ a boundary condition.
 The left hand side and first term of the right hand side of the equation \ref{eq:ss2} are the convection per scale and the source per scale and present no major interaction between scales. However, the integral on the right hand side couples different scales and makes impossible to solve the problem for each scale independently. It should be pointed out that advection can be happening at different speeds ($\tfrac{\partial q}{\partial \xi} \neq 0$) and the source term can also be written independently for each pore-size.
 
 %\TODO{    * Point out challenges for solving the equation}
@@ -141,7 +143,7 @@ Let us write the problem to be solved as follows:
 Find $\mathbf{f}\in X(\Omega)$ such that:
 \begin{eqnarray}
 \mathcal{L} \mathbf{f} = \mathbf{g} \quad \mbox{in} \ \Omega \label{eq:Problem} \\
-\mathcal{B} \mathbf{f} = \mathbf{f_\Gamma} \quad \mbox{on} \ \Gamma \label{eq:Boundary}
+\mathcal{B} \mathbf{f} = \mathbf{f}_{\Gamma} \quad \mbox{on} \ \Gamma \label{eq:Boundary}
 \end{eqnarray}
 
 \noindent where $\Omega$ is the domain of the system, $\Gamma$ is the boundary of the domain, $\mathcal{L}$ is a functional operator, and $\mathcal{B}$ is the trace operator. $\mathbf{f}$ is the approximating function, which in the ideal case coincides with the exact solution to the problem.
@@ -152,7 +154,9 @@ For example, taking equation \ref{eq:ss2} we find:
 \begin{eqnarray}
 \mathbf{f}&=&\phi_i \nonumber \\
 \mathbf{g}&=&S_i \label{eq:problem} \\
-\mathcal{L}\bullet&=& q \cdot \frac{\partial \bullet}{\partial z} - \int \bullet h(z, \hat \xi \rightarrow \xi) d\hat \xi +\bullet\int h(z, \hat \xi \rightarrow \xi) d\hat \xi \nonumber
+\mathcal{L}\bullet&=& q \cdot \frac{\partial \bullet}{\partial z} - \int \bullet h(z, \hat \xi \rightarrow \xi) d\hat \xi +\bullet\int h(z, \hat \xi \rightarrow \xi) d\hat \xi \nonumber\\
+\mathcal{B}\bullet&=&  \bullet
+ \nonumber
 \end{eqnarray}
 
 \Pablo{A} norm equivalent functional \Pablo{can} defined as follows:
@@ -374,9 +378,9 @@ In the manufacturing solution method we propose a solution $\phi(\xi, z)$ and ca
 \begin{align}
 \epsilon(\xi)=&A (\xi-\xi_0) (-\xi+\xi_f) \\
 q({\xi}) =&V \epsilon(\xi) \xi^2\\
-h(\hat \xi, \xi, z) =& q(\hat \xi) q(\xi)/L\\
-\phi(\xi, z) =& 10 sin(z) (1-M Log({\xi}/R))\\
-\nonumber S(\xi, z)=& 10 A V cos(z) {\xi}^2 ({\xi}-\xi_0) (\xi_f-{\xi}) \left(1-M \text{Log}\left[\nicefrac{{\xi}}{R}\right]\right) +\\
+h(z, \hat \xi \rightarrow \xi) =& q(\hat \xi) q(\xi)/L\\
+\phi(z, \xi) =& 10 sin(z) (1-M Log({\xi}/R))\\
+\nonumber S(z, \xi)=& 10 A V cos(z) {\xi}^2 ({\xi}-\xi_0) (\xi_f-{\xi}) \left(1-M \text{Log}\left[\nicefrac{{\xi}}{R}\right]\right) +\\
 \nonumber  &A^2 M V^2  (360 L)^{-1} {\xi}^2 ({\xi}-\xi_0) ({\xi}-\xi_f) sin(z) \times ... \\
 \nonumber  &\big(-81 \xi_0^5+175 \xi_0^4 \xi_f-175 \xi_0 \xi_f^4+  ...\\
 \nonumber &81 \xi_f^5+60 \xi_0^4 (3 \xi_0-5 \xi_f) \text{Log}\left[\frac{\xi_0}{{\xi}}\right]+ ...\\
@@ -396,7 +400,7 @@ Both the discharge, $q({\xi})$ and the porosity, $\epsilon({\xi})$ do not depend
 
 %\TODO{Describe what case could be described with this simplified model.}
 
-The solution is shown in Figure \ref{fig:solution}. As the liquid flows down the column $\phi$ increases due to reactions happening inside the pores. Despite the source term is very different for different pore sizes (negative for large pores and positive for small pores, see Figure \ref{fig:source}) the tracer $\phi$ is exchanged between different pores scales tending to level out the differences. However the increase is larger for the small pores at all the length of the column (z values). The source term (Figure \ref{fig:source}) behaves differently for different pore scales. Large amounts of $\phi$ are generated for pores smaller than 5 mm, while a sink is observed in the largest pores. This behaviour for the source term mimic two competing reactions. It models the case of a specie that is a product of an heterogeneous reaction but is a reactant of a reaction taking place in the liquid bulk. Heterogeneous reactions depend strongly of the surface to volume ratio which is much larger for small pore scales. At the same time the reactant is consumed in the larger pores in this case as the bulk reaction that consumes $\phi$ becomes more dominant.
+The solution is shown in Figure \ref{fig:solution}. As the liquid flows down the column $\phi$ increases due to reactions happening inside the pores. Despite the source term is very different for different pore sizes (negative for large pores and positive for small pores, see Figure \ref{fig:source}) the tracer $\phi$ is exchanged between different pores scales tending to level out the differences. However the increase is larger for the small pores at all the length of the column (z values). The source term (Figure \ref{fig:source}) behaves differently for different pore scales. Large amounts of $\phi$ are generated for pores smaller than 5 mm, while a sink is observed in the largest pores. This behaviour for the source term mimic two competing reactions. It models the case of a species that is a product of an heterogeneous reaction but is a reactant of a reaction taking place in the liquid bulk. Heterogeneous reactions depend strongly of the surface to volume ratio which is much larger for small pore scales. At the same time the reactant is consumed in the larger pores in this case as the bulk reaction that consumes $\phi$ becomes more dominant.
 
 \InsFig{solution}{Solution $\phi(z,\xi)$.}{solution}
 

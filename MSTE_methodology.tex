@@ -44,6 +44,7 @@
 
 \newcommand{\TODO}[1]{\textcolor{blue}{TODO: #1} \\}
 \newcommand{\Fede}[1]{\textcolor{green}{Fede: #1} \\}
+\newcommand{\rev}[1]{\textcolor{red}{#1} \\}
 \newcommand{\Pablo}[1]{#1}
 \newcommand{\newf}[1]{#1}
 \newcommand{\nof}[1]{\textcolor{cyan}{}}
@@ -373,7 +374,7 @@ Here, we define new quadrature points and weights such that $s_k$ exists within 
 
 We select the case of flow through a column for our numerical example. A one meter column filled with a packed bed of rocks has a porosity per scale given by $\epsilon({\xi})$. Liquid is introduced from the top which percoles down the column at a given discharge per scale given by $q({\xi})$. The pore-scale redistribution, $h$  is assumed proportional to the discharges.
 
-In the manufacturing solution method we propose a solution $\phi(\xi, z)$ and calculate analitically the value of the source. For this problem the chosen values are:
+In the manufacturing solution method we propose a solution $\phi(\xi, z)$ and calculate analitically the value of the source. For this problem the chosen functionalities and values are:
 
 \begin{align}
 \epsilon(\xi)=&A (\xi-\xi_0) (-\xi+\xi_f) \\
@@ -388,6 +389,8 @@ h(z, \hat \xi \rightarrow \xi) =& q(\hat \xi) q(\xi)/L\\
 \end{align}
 
 \noindent \newf{with $A=\nicefrac{1}{500}~\text{mm}^{-3}$, $V=0.001 \nicefrac{\text{m}}{\text{mm}^2 \text{s}}$, $M=1$, $R=2\xi_f$, $L=10^{-5}~\nicefrac{\text{m}^2}{\text{s}}$ and pore scale limits $\xi_0=1$ mm and $\xi_f=10$ mm.}
+
+\rev{The selected model was based on physical cases. The porosity expands for pore sizes going from 1 mm to 10 mm. Pore sizes might be extended to various order of magnitudes below one millimetre if the rock presents work or fractures. However, for a pack of solid bodies 1 mm can be a reasonable magnitude. The pore space is has a maximum at 5.5 mm, and a total porosity of 24\% (note that this is very close to the ideal close pack porosity of $\tfrac{\pi}{18}$). The discharge $q$ depends with the porosity and a factor that scales with the square of the pore size as in pipes. The redistribution discharge follow the model of symmetric mixing with length $L$}.
 
 \subsection{Results}
 The Gauss--Lobatto--Legendre quadrature rule was used to approximate the integrals in $z$, while the Gauss--Legendre quadratures were used for $\xi$. The solution was approximated using a nodal expansion based on Lagrange polynomials defined at the zeros of these quadratures. The problem was coded in {MATLAB}, and its direct solver was used for the calculations.
